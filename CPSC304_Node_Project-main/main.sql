@@ -21,7 +21,7 @@ DROP TABLE IsFriendsWith;
 
 
 -- Create statements
-CREATE TABLE Profession(
+CREATE TABLE Profession (
 	ProfessionID INT,
 	Name VARCHAR(50) NOT NULL UNIQUE,
 	Wage INT,
@@ -29,7 +29,7 @@ CREATE TABLE Profession(
 	PRIMARY KEY(ProfessionID)
 );
 
-CREATE TABLE Class(
+CREATE TABLE Class (
 	ClassID INT,
 	Name VARCHAR(50) NOT NULL UNIQUE,
 	MinLevel INT,
@@ -38,7 +38,7 @@ CREATE TABLE Class(
 );
 
 
-CREATE TABLE Ability(
+CREATE TABLE Ability (
 	ClassID INT,
 	Name VARCHAR(50),
 	ManaCost INT,
@@ -50,7 +50,7 @@ CREATE TABLE Ability(
 );
 
 
-CREATE TABLE Clan(
+CREATE TABLE Clan (
 	ClanName VARCHAR(25),
 	MinLevelToJoin INT,
 	ClanRank INT,
@@ -59,7 +59,7 @@ CREATE TABLE Clan(
 );
 
 
-CREATE TABLE GlobalEvent(
+CREATE TABLE GlobalEvent (
 	EventID INT,
 	Name VARCHAR(50),
 	TimeStart TIMESTAMP, 
@@ -70,7 +70,7 @@ CREATE TABLE GlobalEvent(
 );
 
 
-CREATE TABLE Quest(
+CREATE TABLE Quest (
 	QuestID INT,
 	Name VARCHAR(50),
 	MinLevel INT,
@@ -82,7 +82,7 @@ CREATE TABLE Quest(
 );
 
 
-CREATE TABLE Location(
+CREATE TABLE Location (
 	LocationID INT,
 	Name VARCHAR(50),
 	Terrain VARCHAR(50),
@@ -93,7 +93,7 @@ CREATE TABLE Location(
 );
 
 
-CREATE TABLE NPC(
+CREATE TABLE NPC (
 	NPC_ID INT,
 	Name VARCHAR(50),
 	NPC_Level INT,
@@ -104,7 +104,7 @@ CREATE TABLE NPC(
 );
 
 
-CREATE TABLE EnemySpecies(
+CREATE TABLE EnemySpecies (
 	EnemySpecies VARCHAR(50),
 	SpawnRate FLOAT(24),
 	Aggression FLOAT(24),
@@ -113,7 +113,7 @@ CREATE TABLE EnemySpecies(
 );
 
 
-CREATE TABLE Enemy(
+CREATE TABLE Enemy (
 	NPC_ID INT,
 	EnemySpecies VARCHAR(50) NOT NULL,
 	EXPDropped INT,
@@ -124,7 +124,7 @@ CREATE TABLE Enemy(
 );
 
 
-CREATE TABLE Item(
+CREATE TABLE Item (
 	ItemID INT,
 	Name VARCHAR(50),
 	ItemType VARCHAR(50),
@@ -133,7 +133,7 @@ CREATE TABLE Item(
 );
 
 
-CREATE TABLE Weapon(
+CREATE TABLE Weapon (
 	ItemID INT,
 	WeaponStats VARCHAR(255),
 	MinStats VARCHAR(255),
@@ -143,7 +143,7 @@ CREATE TABLE Weapon(
 );
 
 
-CREATE TABLE Drops(
+CREATE TABLE Drops (
 	NPC_ID INT,
 	ItemID INT,
 	ItemDropRate FLOAT(24),
@@ -153,7 +153,7 @@ CREATE TABLE Drops(
 );
 
 
-CREATE TABLE PlayerLevel(
+CREATE TABLE PlayerLevel (
 	PlayerLevel INT,
 	ClassID INT NOT NULL,
 	BaseStats VARCHAR(255),
@@ -162,7 +162,7 @@ CREATE TABLE PlayerLevel(
 );
 
 
-CREATE TABLE Player(
+CREATE TABLE Player (
 	Username VARCHAR(25),
 	PlayerLevel INT NOT NULL,
 	Currency INT,
@@ -181,7 +181,7 @@ CREATE TABLE Player(
 );
 
 
-CREATE TABLE InInventory(
+CREATE TABLE InInventory (
 	Username VARCHAR(25),
 	ItemID INT,
 	PRIMARY KEY(Username, ItemID),
@@ -190,7 +190,7 @@ CREATE TABLE InInventory(
 );
 
 
-CREATE TABLE IsActive(
+CREATE TABLE IsActive (
 	Username VARCHAR(25),
 	QuestID INT,
 	PRIMARY KEY(Username, QuestID),
@@ -199,7 +199,7 @@ CREATE TABLE IsActive(
 );
 
 
-CREATE TABLE IsFriendsWith(
+CREATE TABLE IsFriendsWith (
 	Player1 VARCHAR(25),
 	Player2 VARCHAR(25),
 	PRIMARY KEY(Player1, Player2),
