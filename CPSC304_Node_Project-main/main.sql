@@ -1,3 +1,26 @@
+
+--Drop statements
+DROP TABLE Profession;
+DROP TABLE Class;
+DROP TABLE Ability;
+DROP TABLE Clan;
+DROP TABLE GlobalEvent;
+DROP TABLE Quest;
+DROP TABLE Location;
+DROP TABLE NPC;
+DROP TABLE EnemySpecies;
+DROP TABLE Enemy;
+DROP TABLE Item;
+DROP TABLE Weapon;
+DROP TABLE Drops;
+DROP TABLE PlayerLevel;
+DROP TABLE Player;
+DROP TABLE InInventory;
+DROP TABLE IsActive;
+DROP TABLE IsFriendsWith;
+
+
+-- Create statements
 CREATE TABLE Profession(
 	ProfessionID INT,
 	Name VARCHAR(50) NOT NULL UNIQUE,
@@ -184,6 +207,7 @@ CREATE TABLE IsFriendsWith(
 	FOREIGN KEY(Player2) references Player ON DELETE CASCADE
 );
 
+-- Insert statements
 INSERT INTO Profession (ProfessionID, Name, Wage, MinStats) VALUES
 (1, 'Blacksmith', 120, 'HP: 0, ATK: 12, DEF: 8, SPD: 0'),
 (2, 'Alchemist', 110, 'HP: 0, ATK: 0, DEF: 4, SPD: 6'),
