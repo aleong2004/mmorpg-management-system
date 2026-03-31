@@ -141,6 +141,58 @@ async function countDemotable() {
         return -1;
     });
 }
+// STUFF
+
+// Insert query
+//async function insertEnemy(enemyData) { TODO: this shit got hands ;-;
+
+//delete query
+async function deleteItem() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `DELETE FROM Item WHERE ItemID = :itemId`,
+            [itemId],
+            { autoCommit: true }
+        );
+
+        return result.rowsAffected && result.rowsAffected > 0;
+    }).catch(() => {
+        return -1;
+    });
+}
+
+
+//aggregation with having query
+async function agregationWithHaving(minPlayerCount) { // made smth - minPlayerCount
+    return await withOracleDB(async (connection) => {
+        
+        const result = await connection.execute( // Anthony mentioned "Should also return attributes of the clan other than just the clan name" Dont know why but here it is
+            `
+            SELECT
+                c.ClanName,
+                c.MinLevelToJoin,
+                c.ClanRank,   
+                c.NumMembers,
+                MIN(p.PlayerLevel) AS MinPlayerLevel,
+                MAX(p.PlayerLevel) AS MaxPlayerLevel,
+                ROUND(AVG(p.PlayerLevel), 2) AS AvgPlayerLevel,
+            FROM Clan c
+            JOIN Player p ON c.ClanName = p.ClanName
+            GROUP BY
+                c.ClanName,
+                c.MinLevelToJoin,
+                c.ClanRank,
+                c.NumMembers
+            HAVING COUNT(p.Username) > :minPlayerCount
+            `,
+            { minPlayerCount: minPlayerCount }
+        );
+
+        return result.rows;
+    }).catch(() => {
+        return -1;
+    });
+}
 
 module.exports = {
     testOracleConnection,
