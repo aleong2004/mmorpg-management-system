@@ -1,24 +1,22 @@
-
---Drop statements
-DROP TABLE Profession;
-DROP TABLE Class;
-DROP TABLE Ability;
-DROP TABLE Clan;
-DROP TABLE GlobalEvent;
-DROP TABLE Quest;
-DROP TABLE Location;
-DROP TABLE NPC;
-DROP TABLE EnemySpecies;
-DROP TABLE Enemy;
-DROP TABLE Item;
-DROP TABLE Weapon;
-DROP TABLE Drops;
-DROP TABLE PlayerLevel;
-DROP TABLE Player;
+-- Drop statements
+DROP TABLE IsFriendsWith;
 DROP TABLE InInventory;
 DROP TABLE IsActive;
-DROP TABLE IsFriendsWith;
-
+DROP TABLE Player;
+DROP TABLE PlayerLevel;
+DROP TABLE Drops;
+DROP TABLE Weapon;
+DROP TABLE Item;
+DROP TABLE Enemy;
+DROP TABLE EnemySpecies;
+DROP TABLE NPC;
+DROP TABLE Location;
+DROP TABLE Quest;
+DROP TABLE GlobalEvent;
+DROP TABLE Clan;
+DROP TABLE Ability;
+DROP TABLE Class;
+DROP TABLE Profession;
 
 -- Create statements
 CREATE TABLE Profession (
@@ -232,11 +230,11 @@ INSERT INTO Clan (ClanName, MinLevelToJoin, ClanRank, NumMembers) VALUES ('Shado
 INSERT INTO Clan (ClanName, MinLevelToJoin, ClanRank, NumMembers) VALUES ('IronLegion', 12, 4, 20);
 INSERT INTO Clan (ClanName, MinLevelToJoin, ClanRank, NumMembers) VALUES ('Wanderers', 1, 5, 30);
 
-INSERT INTO GlobalEvent (EventID, Name, TimeStart, TimeEnd, EXP_Reward, CurrencyReward) VALUES (1, 'Harvest Festival', 2026-03-01 08:00:00, 2026-03-07 23:59:59, 300, 150);
-INSERT INTO GlobalEvent (EventID, Name, TimeStart, TimeEnd, EXP_Reward, CurrencyReward) VALUES (2, 'Goblin Invasion', 2026-03-10 10:00:00, 2026-03-12 22:00:00, 500, 250);
-INSERT INTO GlobalEvent (EventID, Name, TimeStart, TimeEnd, EXP_Reward, CurrencyReward) VALUES (3, 'Lunar Eclipse', 2026-03-15 20:00:00, 2026-03-16 02:00:00, 450, 200);
-INSERT INTO GlobalEvent (EventID, Name, TimeStart, TimeEnd, EXP_Reward, CurrencyReward) VALUES (4, 'Arena Week', 2026-03-18 09:00:00, 2026-03-25 23:59:59, 350, 300);
-INSERT INTO GlobalEvent (EventID, Name, TimeStart, TimeEnd, EXP_Reward, CurrencyReward) VALUES (5, 'Winter Hunt', 2026-03-28 06:00:00, 2026-04-03 23:59:59, 400, 220);
+INSERT INTO GlobalEvent (EventID, Name, TimeStart, TimeEnd, EXP_Reward, CurrencyReward) VALUES (1, 'Harvest Festival', TO_TIMESTAMP('2026-03-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2026-03-07 23:59:59', 'YYYY-MM-DD HH24:MI:SS'), 300, 150);
+INSERT INTO GlobalEvent (EventID, Name, TimeStart, TimeEnd, EXP_Reward, CurrencyReward) VALUES (2, 'Goblin Invasion', TO_TIMESTAMP('2026-03-10 10:00:00', 'YYYY-MM-DD HH24:MI:SS'),  TO_TIMESTAMP('2026-03-12 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 500, 250);
+INSERT INTO GlobalEvent (EventID, Name, TimeStart, TimeEnd, EXP_Reward, CurrencyReward) VALUES (3, 'Lunar Eclipse', TO_TIMESTAMP('2026-03-15 20:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2026-03-16 02:00:00', 'YYYY-MM-DD HH24:MI:SS'), 450, 200);
+INSERT INTO GlobalEvent (EventID, Name, TimeStart, TimeEnd, EXP_Reward, CurrencyReward) VALUES (4, 'Arena Week', TO_TIMESTAMP('2026-03-18 09:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2026-03-25 23:59:59', 'YYYY-MM-DD HH24:MI:SS'), 350, 300);
+INSERT INTO GlobalEvent (EventID, Name, TimeStart, TimeEnd, EXP_Reward, CurrencyReward) VALUES (5, 'Winter Hunt', TO_TIMESTAMP('2026-03-28 06:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2026-04-03 23:59:59', 'YYYY-MM-DD HH24:MI:SS'), 400, 220);
 
 INSERT INTO Quest (QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, EventID) VALUES (1, 'Defend the Village', 5, 120, 60, 2);
 INSERT INTO Quest (QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, EventID) VALUES (2, 'Collect Herbs', 3, 80, 40, 3);
@@ -293,11 +291,11 @@ INSERT INTO PlayerLevel (PlayerLevel, ClassID, BaseStats) VALUES (7, 3, 'HP: 130
 INSERT INTO PlayerLevel (PlayerLevel, ClassID, BaseStats) VALUES (10, 4, 'HP: 140, ATK: 10, DEF: 12, SPD: 10');
 INSERT INTO PlayerLevel (PlayerLevel, ClassID, BaseStats) VALUES (12, 5, 'HP: 150, ATK: 20, DEF: 10, SPD: 22');
 
-INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('todd', 8, 500, 160, 2026-03-05 18:20:00, 2, 2, 'MoonGuard', 3);
-INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('jonsnow', 5, 220, 55, 2026-03-06 09:10:00, 1, 1, 'Wanderers', 1);
-INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('aegon', 7, 340, 85, 2026-03-04 21:45:00, 3, 3, 'ShadowLeaf', 3);
-INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('walterwhite', 10, 620, 150, 2026-03-06 11:00:00, 4, 4, 'DragonSlayers', 2);
-INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('jesse', 12, 710, 95, 2026-03-05 23:30:00, 5, 5, 'IronLegion', 5);
+INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('todd', 8, 500, 160, TO_TIMESTAMP('2026-03-05 18:20:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 2, 'MoonGuard', 3);
+INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('jonsnow', 5, 220, 55, TO_TIMESTAMP('2026-03-06 09:10:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 1, 'Wanderers', 1);
+INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('aegon', 7, 340, 85, TO_TIMESTAMP('2026-03-04 21:45:00', 'YYYY-MM-DD HH24:MI:SS'), 3, 3, 'ShadowLeaf', 3);
+INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('walterwhite', 10, 620, 150, TO_TIMESTAMP('2026-03-06 11:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4, 'DragonSlayers', 2);
+INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('jesse', 12, 710, 95, TO_TIMESTAMP('2026-03-05 23:30:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 5, 'IronLegion', 5);
 
 INSERT INTO InInventory (Username, ItemID) VALUES ('todd', 2);
 INSERT INTO InInventory (Username, ItemID) VALUES ('jonsnow', 1);
