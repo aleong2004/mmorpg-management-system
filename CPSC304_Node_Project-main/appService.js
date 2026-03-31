@@ -150,7 +150,7 @@ async function countDemotable() {
 async function deleteItem() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `DELETE FROM Item WHERE ItemID = :itemId`,
+            `DELETE FROM Item WHERE ItemID =: itemId`,
             [itemId],
             { autoCommit: true }
         );
@@ -200,5 +200,7 @@ module.exports = {
     initiateDemotable, 
     insertDemotable, 
     updateNameDemotable, 
-    countDemotable
+    countDemotable,
+    agregationWithHaving,
+    deleteItem
 };
