@@ -1,5 +1,6 @@
 const oracledb = require('oracledb');
 const loadEnvFile = require('./utils/envUtil');
+const fs = require("fs");
 
 const envVariables = loadEnvFile('./.env');
 
@@ -105,6 +106,30 @@ async function initiateDemotable() {
     });
 }
 
+async function reloadDB() {
+    return await withOracleDB(async (connection) => {
+        const filename = "main.sql";
+        const split_location = "-- Create statements";
+        let sql_script = fs.readFileSync(filename, "utf-8").split(split_location);
+        let drop_tables = sql_script[0].split(";").map(str => str.trim()).filter(str => str !== "");
+        let create_tables_and_tuples = sql_script[1].split(";").map(str => str.trim()).filter(str => str !== "");
+        try {
+            for (const drop_table_statement of drop_tables) {
+                await connection.execute(drop_table_statement);
+            }
+        } catch(err) {
+            console.log("Error in DROP TABLE statement: ", err);
+        }
+
+        for (const sql_statement of create_tables_and_tuples) {
+            const result = await connection.execute(sql_statement);
+        }
+        return true;
+    }).catch(() => {
+        return false;
+    });
+}
+
 async function insertDemotable(id, name) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
@@ -198,6 +223,7 @@ module.exports = {
     testOracleConnection,
     fetchDemotableFromDb,
     initiateDemotable, 
+    reloadDB,
     insertDemotable, 
     updateNameDemotable, 
     countDemotable,

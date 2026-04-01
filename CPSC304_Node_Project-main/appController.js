@@ -29,6 +29,15 @@ router.post("/initiate-demotable", async (req, res) => {
     }
 });
 
+router.post("/reload-db", async (req, res) => {
+    const reloadResult = await appService.reloadDB();
+    if (reloadResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
 router.post("/insert-demotable", async (req, res) => {
     const { id, name } = req.body;
     const insertResult = await appService.insertDemotable(id, name);

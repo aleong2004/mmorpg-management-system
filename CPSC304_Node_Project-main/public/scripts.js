@@ -78,6 +78,22 @@ async function resetDemotable() {
     }
 }
 
+// Drops, recreates, and reloads all tables in the database (not including the demotable).
+async function reloadDB() {
+    const response = await fetch("/reload-db", {
+        method: 'POST'
+    });
+    const responseData = await response.json();
+
+    if (responseData.success) {
+        const messageElement = document.getElementById('reloadResultMsg');
+        messageElement.textContent = "Database successfully reloaded!";
+        fetchTableData();
+    } else {
+        alert("Error reloading database!");
+    }
+}
+
 // Inserts new records into the demotable.
 async function insertDemotable(event) {
     event.preventDefault();
@@ -162,6 +178,7 @@ window.onload = function() {
     checkDbConnection();
     fetchTableData();
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
+    document.getElementById("reloadDatabase").addEventListener("click", reloadDB);
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countDemotable").addEventListener("click", countDemotable);
