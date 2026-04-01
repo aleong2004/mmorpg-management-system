@@ -62,6 +62,31 @@ async function fetchAndDisplayUsers() {
     });
 }
 
+// Fetches player data and displays it
+async function fetchAndDisplayPlayers() {
+    const tableElement = document.getElementById('playerTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/player-table', {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+    const playerContent = responseData.data;
+
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    playerContent.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+}
+
 // This function resets or initializes the demotable.
 async function resetDemotable() {
     const response = await fetch("/initiate-demotable", {
@@ -76,6 +101,26 @@ async function resetDemotable() {
     } else {
         alert("Error initiating table!");
     }
+}
+
+// Drops, recreates, and reloads all tables in the database (not including the demotable).
+async function reloadDB() {
+    const button = document.getElementById('reloadDatabase');
+    const messageElement = document.getElementById('reloadResultMsg');
+    button.disabled = true;
+
+    const response = await fetch("/reload-db", {
+        method: 'POST'
+    });
+    const responseData = await response.json();
+
+    if (responseData.success) {
+        messageElement.textContent = "Database successfully reloaded!";
+        fetchTableData();
+    } else {
+        alert("Error reloading database!");
+    }
+    button.disabled = false;
 }
 
 // Inserts new records into the demotable.
@@ -162,6 +207,7 @@ window.onload = function() {
     checkDbConnection();
     fetchTableData();
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
+    document.getElementById("reloadDatabase").addEventListener("click", reloadDB);
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countDemotable").addEventListener("click", countDemotable);
@@ -171,4 +217,5 @@ window.onload = function() {
 // You can invoke this after any table-modifying operation to keep consistency.
 function fetchTableData() {
     fetchAndDisplayUsers();
+    fetchAndDisplayPlayers();
 }

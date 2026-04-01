@@ -20,9 +20,23 @@ router.get('/demotable', async (req, res) => {
     res.json({data: tableContent});
 });
 
+router.get('/player-table', async (req, res) => {
+    const playerContent = await appService.fetchPlayerData();
+    res.json({data: playerContent});
+});
+
 router.post("/initiate-demotable", async (req, res) => {
     const initiateResult = await appService.initiateDemotable();
     if (initiateResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.post("/reload-db", async (req, res) => {
+    const reloadResult = await appService.reloadDB();
+    if (reloadResult) {
         res.json({ success: true });
     } else {
         res.status(500).json({ success: false });

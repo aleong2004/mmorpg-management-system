@@ -39,6 +39,28 @@
         </tbody>
     </table>
 
+    <!-- Show Player table (this is mostly for testing). 
+        Data will be fetched and inserted here dynamically using JavaScript. -->
+    <h2>Show Player data</h2>
+    <table id="playerTable" border="1">
+        <thead>
+            <tr>
+                <!--Table head, need to be adjusted accordingly to align with your own.-->
+                <th>Username</th>
+                <th>Level</th>
+                <th>Currency</th>
+                <th>Mana</th>
+                <th>Last Seen Online</th>
+                <th>Profession ID</th>
+                <th>Class ID</th>
+                <th>Clan Name</th>
+                <th>Location ID</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
     <br><hr><br> <!-- ========================================================================= -->
 
     <h2>Reset Demotable</h2>
@@ -46,6 +68,14 @@
     <button id="resetDemotable"> reset </button> <br>
     <!-- A placeholder to display messages related to the reset operation. -->
     <div id="resetResultMsg"></div>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h2>Reload Demotable</h2>
+    <p>Press the button to reload the database. This will undo any changes that have been made. If this is the first time you're running this page, you MUST reset the database.</p>
+    <button id="reloadDatabase"> Reload </button> <br>
+    <!-- A placeholder to display messages related to the reset operation. -->
+    <div id="reloadResultMsg"></div>
 
     <br><hr><br> <!-- ========================================================================= -->
 
