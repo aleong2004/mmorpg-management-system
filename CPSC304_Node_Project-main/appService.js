@@ -86,6 +86,15 @@ async function fetchDemotableFromDb() {
     });
 }
 
+async function fetchPlayerData() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute('SELECT * FROM Player');
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
 async function initiateDemotable() {
     return await withOracleDB(async (connection) => {
         try {
@@ -122,7 +131,7 @@ async function reloadDB() {
         }
 
         for (const sql_statement of create_tables_and_tuples) {
-            const result = await connection.execute(sql_statement);
+            const result = await connection.execute(sql_statement, [], { autoCommit: true });
         }
         return true;
     }).catch(() => {
@@ -222,6 +231,7 @@ async function agregationWithHaving(minPlayerCount) { // made smth - minPlayerCo
 module.exports = {
     testOracleConnection,
     fetchDemotableFromDb,
+    fetchPlayerData,
     initiateDemotable, 
     reloadDB,
     insertDemotable, 
