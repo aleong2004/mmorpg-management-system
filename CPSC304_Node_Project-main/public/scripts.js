@@ -557,10 +557,13 @@ async function fetchAndDisplayEnemies() {
         tableRow.style.cursor = 'pointer';
         tableRow.addEventListener('click', () => {
             document.getElementById('updateNpcId').value = row[0];
-            document.getElementById('updateEnemySpecies').value = row[2];
-            document.getElementById('updateExpDropped').value = row[3];
-            document.getElementById('updateGoldDropped').value = row[4];
-
+            document.getElementById('updateName').value = row[1];
+            document.getElementById('updateNpcLevel').value = row[2];
+            document.getElementById('updateBaseStats').value = row[3];
+            document.getElementById('updateLocationId').value = row[4];
+            document.getElementById('updateEnemySpecies').value = row[5];
+            document.getElementById('updateExpDropped').value = row[6];
+            document.getElementById('updateGoldDropped').value = row[7];
         });
     });
     
@@ -592,6 +595,10 @@ async function updateEnemy(event) {
     event.preventDefault();
 
     const npcId = document.getElementById('updateNpcId').value;
+    const name = document.getElementById('updateName').value;
+    const npcLevel = document.getElementById('updateNpcLevel').value;
+    const baseStats = document.getElementById('updateBaseStats').value;
+    const locationId = document.getElementById('updateLocationId').value;
     const enemySpecies = document.getElementById('updateEnemySpecies').value;
     const expDropped = document.getElementById('updateExpDropped').value;
     const goldDropped = document.getElementById('updateGoldDropped').value;
@@ -599,7 +606,7 @@ async function updateEnemy(event) {
     const response = await fetch('/update-enemy', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({npcId, enemySpecies, expDropped, goldDropped})
+        body: JSON.stringify({ npcId, name, npcLevel, baseStats, locationId, enemySpecies, expDropped, goldDropped })
     });
 
     const responseData = await response.json();
