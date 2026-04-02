@@ -460,7 +460,7 @@ function parseCondList(condList) {
         }
 
         if (cond[1] === "p.LastSeenOnline") {
-            cond[3] = `%${cond[3].replace("T", " ")}%`;
+            cond[3] = `${cond[3].replace("T", " ")}`;
         }
     }
     return condList;
