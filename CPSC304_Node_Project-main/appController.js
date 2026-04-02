@@ -127,4 +127,10 @@ router.get('/player-abilities', async (req,res) => {
     res.json({data: result});
 });
 
+//for division
+router.get('/friends-with-all-clan-members', async (req, res) => {
+    const result = await appService.getPlayersfriendsWithAllClanMembers();
+    res.json({ data: result });
+});
+
 module.exports = router;

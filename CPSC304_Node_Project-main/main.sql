@@ -395,3 +395,16 @@ INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('todd', 'walterwhite');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('jonsnow', 'aegon');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('aegon', 'jesse');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('walterwhite', 'jesse');
+
+-- Michael Scott is friends with all other clan members so this basically satisfies our division
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Michael Scott', 'awesomeguy1');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Michael Scott', 'awesomeguy2');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Michael Scott', 'awesomeguy3');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Michael Scott', 'awesomeguy4');
+
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy1', 'Michael Scott');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy1', 'awesomeguy3');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy1', 'awesomeguy4');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy1', 'awesomeguy2');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy2', 'awesomeguy3');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy3', 'awesomeguy4');
