@@ -314,6 +314,36 @@ async function updateEnemy(event) {
     }
 }
 
+//player abilities, JOIN query
+async function getPlayerAbilities(event) {
+    event.preventDefault();
+    const username = document.getElementById('abilityUsername').value;
+    const response = await fetch(`/player-abilities?username=${encodeURIComponent(username)}`, {
+        method: 'GET'
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('playerAbilitiesResultMsg');
+    const tableElement = document.getElementById('playerAbilitiesTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    if (tableBody) tableBody.innerHTML = '';
+
+    if (responseData.data.length === 0) {
+        messageElement.textContent = "No results found for that username.";
+        return;
+    }
+
+    messageElement.textContent = '';
+    responseData.data.forEach(row => {
+        const tableRow = tableBody.insertRow();
+        row.forEach((field, index) => {
+            const cell = tableRow.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+    
+}
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
@@ -328,8 +358,9 @@ window.onload = function() {
     document.getElementById("agregationWithHaving").addEventListener("submit", agregationWithHaving);
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
     // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
-    document.getElementById("countDemotable").addEventListener("click", countDemotable);
+    // document.getElementById("countDemotable").addEventListener("click", countDemotable);
     document.getElementById("updateEnemyForm").addEventListener("submit", updateEnemy);
+    document.getElementById("playerAbilitiesForm").addEventListener("submit", getPlayerAbilities);
 
 };
 

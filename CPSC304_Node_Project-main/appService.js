@@ -211,6 +211,24 @@ async function updateEnemy(npcId, enemySpecies, expDropped, goldDropped) {
     });
     
 }
+
+async function getPlayerAbilities(username) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT p.Username, c.Name AS ClassName, a.Name AS AbilityName,
+                    a.ManaCost, a.Cooldown, a.BaseDamage
+            FROM Player p
+            JOIN Class c ON p.ClassID = c.ClassID
+            JOIN Ability a ON c.ClassID = a.ClassID
+            WHERE p.Username = :username`,
+            { username }
+        );
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+    
+}
 // STUFF
 
 // Insert query
@@ -249,7 +267,7 @@ async function agregationWithHaving(minPlayerCount) { // made smth - minPlayerCo
             FROM Clan c
             JOIN Player p ON c.ClanName = p.ClanName
             GROUP BY
-                c.ClanName,this
+                c.ClanName,
                 c.MinLevelToJoin,
                 c.ClanRank,
                 c.NumMembers
@@ -276,5 +294,6 @@ module.exports = {
     agregationWithHaving,
     deleteItem,
     fetchEnemyData,
-    updateEnemy
+    updateEnemy,
+    getPlayerAbilities
 };

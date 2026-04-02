@@ -172,10 +172,38 @@
     
     <br><hr><br> <!-- ========================================================================= -->
 
-    <h2>Count the Tuples in DemoTable</h2>
-    <button id="countDemotable"> count </button> <br><br>
+    <!-- <h2>Count the Tuples in DemoTable</h2> -->
+    <!-- <button id="countDemotable"> count </button> <br><br> -->
     <!-- A placeholder to display the count result. -->
-    <div id="countResultMsg"></div> <br>
+    <!-- <div id="countResultMsg"></div> <br> -->
+
+    <br>
+    <hr><br>
+    
+    <h2>Player Abilities</h2>
+    <h3>JOIN Query</h3>
+    <p>Enter a username to see all abilities that player has access to based on their class.</p>
+    
+    <form id="playerAbilitiesForm">
+        Username: <input type="text" id="abilityUsername" placeholder="Enter username" required> <br><br>
+        <button type="submit">Search</button>
+    </form>
+    <div id="playerAbilitiesResultMsg"></div>
+    
+    <table id="playerAbilitiesTable" border="1">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Class</th>
+                <th>Ability</th>
+                <th>Mana Cost</th>
+                <th>Cooldown</th>
+                <th>Base Damage</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 
     <!-- ===================================================================================== -->
     <!-- External JavaScript file that contains the functionality/logic for the operations above. -->

@@ -224,6 +224,18 @@ INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseS
 INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseStats) VALUES (4, 'Holy Light', 30, 6.0, 25, 'HP: 25, ATK: 0, DEF: 3, SPD: 0');
 INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseStats) VALUES (5, 'Backstab', 18, 3.5, 50, 'HP: 0, ATK: 12, DEF: 0, SPD: 4');
 
+-- Additional abilities per class for our JOIN query
+INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseStats) VALUES (1, 'Fast Blade', 30, 12.0, 20, 'HP: 0, ATK: 10, DEF: 0, SPD: 0');
+INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseStats) VALUES (1, 'Whirl wind', 40, 10.0, 55, 'HP: 0, ATK: 8, DEF: -2, SPD: 0');
+INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseStats) VALUES (2, 'Super Nova', 45, 8.0, 50, 'HP: 0, ATK: 0, DEF: 0, SPD: -4');
+INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseStats) VALUES (2, 'Butane Blast', 50, 6.0, 75, 'HP: 0, ATK: 12, DEF: 0, SPD: 0');
+INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseStats) VALUES (3, 'Rain of Arrows', 35, 9.0, 60, 'HP: 0, ATK: 6, DEF: 0, SPD: 0');
+INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseStats) VALUES (3, 'Eagle Eye', 20, 7.0, 40, 'HP: 0, ATK: 10, DEF: -1, SPD: 3');
+INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseStats) VALUES (4, 'Divine Shield', 40, 15.0, 0, 'HP: 50, ATK: 0, DEF: 10, SPD: 0');
+INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseStats) VALUES (4, 'Smite', 25, 4.0, 40, 'HP: 0, ATK: 8, DEF: 0, SPD: 0');
+INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseStats) VALUES (5, 'Shadow Step', 22, 5.0, 35, 'HP: 0, ATK: 0, DEF: 0, SPD: 10');
+INSERT INTO Ability (ClassID, Name, ManaCost, Cooldown, BaseDamage, BuffsToBaseStats) VALUES (5, 'Poison Blade', 28, 6.5, 45, 'HP: 0, ATK: 8, DEF: 0, SPD: 2');
+
 INSERT INTO Clan (ClanName, MinLevelToJoin, ClanRank, NumMembers) VALUES ('DragonSlayers', 10, 1, 25);
 INSERT INTO Clan (ClanName, MinLevelToJoin, ClanRank, NumMembers) VALUES ('MoonGuard', 5, 2, 18);
 INSERT INTO Clan (ClanName, MinLevelToJoin, ClanRank, NumMembers) VALUES ('ShadowLeaf', 8, 3, 14);

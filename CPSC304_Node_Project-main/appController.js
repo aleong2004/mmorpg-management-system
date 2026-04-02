@@ -104,6 +104,7 @@ router.get('/count-demotable', async (req, res) => {
     }
 });
 
+//for the update query
 router.get('/enemy-table', async (req,res) => {
     const enemies = await appService.fetchEnemyData();
     res.json({data: enemies});
@@ -117,6 +118,13 @@ router.post('/update-enemy', async (req, res) => {
     } else {
         res.status(500).json({success: false});
     }
+});
+
+//for the join query
+router.get('/player-abilities', async (req,res) => {
+    const {username} = req.query;
+    const result = await appService.getPlayerAbilities(username);
+    res.json({data: result});
 });
 
 module.exports = router;
