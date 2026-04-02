@@ -395,7 +395,7 @@ async function selectPlayers(condList) {
             
             binds[key] = curr_cond[3];
         }
-        console.log(where_clause);
+        console.log(`(${where_clause}) AND ${join_clause}`);
         const result = await connection.execute(
             `SELECT ${columns.join(", ")} 
              FROM ${from_clause} 
