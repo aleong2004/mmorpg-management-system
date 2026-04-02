@@ -190,7 +190,8 @@ async function countDemotable() {
 async function fetchEnemyData() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `SELECT e.NPC_ID, n.Name, e.EnemySpecies, e.EXPDropped, e.GoldDropped
+            `SELECT e.NPC_ID, n.Name, n.NPC_Level, n.BaseStats, n.LocationID, 
+                    e.EnemySpecies, e.EXPDropped, e.GoldDropped
             FROM Enemy e
             JOIN NPC n
             ON e.NPC_ID = n.NPC_ID`
@@ -203,8 +204,19 @@ async function fetchEnemyData() {
     
 }
 
-async function updateEnemy(npcId, enemySpecies, expDropped, goldDropped) {
+async function updateEnemy(npcId, name, npcLevel, baseStats, locationId, enemySpecies, expDropped, goldDropped) {
     return await withOracleDB(async (connection) => {
+        await connection.execute(
+            `UPDATE NPC
+            SET Name = :name,
+                NPC_Level = :npcLevel,
+                BaseStats = :baseStats,
+                LocationID = :locationId
+            WHERE NPC_ID = :npcId`,
+            { name, npcLevel, baseStats, locationId, npcId },
+            { autoCommit: true }
+
+        );
         const result = await connection.execute(
             `UPDATE Enemy
             SET EnemySpecies = :enemySpecies,
