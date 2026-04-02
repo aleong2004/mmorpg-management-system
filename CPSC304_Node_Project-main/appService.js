@@ -89,9 +89,9 @@ async function fetchDemotableFromDb() {
 async function fetchPlayerData() {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `SELECT p.Username, p.PlayerLevel, pl.BaseStats, p.Currency, p.Mana, p.LastSeenOnline,
-                    p.ProfessionID, prof.Name, p.ClassID, c.Name, p.ClanName, 
-                    p.LocationID, loc.Name
+            `SELECT p.Username, p.PlayerLevel, pl.BaseStats, p.Currency, p.Mana, 
+                    p.LastSeenOnline, p.ProfessionID, prof.Name, p.ClassID, 
+                    c.Name, p.ClanName, p.LocationID, loc.Name
              FROM Player p, PlayerLevel pl, Location loc, Profession prof, Class c
              WHERE p.ProfessionID = prof.ProfessionID AND
                    p.ClassID = c.ClassID AND

@@ -152,7 +152,6 @@ async function deleteItem(event) {
 // Projects the Quest table on the selected columns
 async function questProjection(event) {
     event.preventDefault();
-
     const messageElement = document.getElementById("ProjectionResultMsg");
     const projectionTable = document.getElementById("projectionTable");
     const tbody = projectionTable.querySelector("tbody");
@@ -177,7 +176,7 @@ async function questProjection(event) {
     const questContent = responseData.data;
 
     if (responseData.success) {
-        messageElement.textContent = "Requested attributes:";
+        messageElement.textContent = "Requested data:";
     } else {
         messageElement.textContent = "Error requesting quest data..."
         return;
@@ -213,16 +212,111 @@ async function addAttrToProjection(event) {
     const tableElement = document.getElementById("projectionTable");
     const tableBody = tableElement.querySelector('tbody');
     const row = tableBody.insertRow();
-    row.id = button.id.split("projection")[1];
     const cell1 = row.insertCell();
-    cell1.textContent = button.id.split("projection")[1];
     const cell2 = row.insertCell();
+
+    row.id = button.id.split("projection")[1];
+    cell1.textContent = button.id.split("projection")[1];
     const delAttrButton = document.createElement("button");
     delAttrButton.textContent = "Remove";
     delAttrButton.addEventListener("click", function() {
         row.remove();
     });
     cell2.appendChild(delAttrButton);
+}
+
+async function playerSelection(event) {
+    event.preventDefault();
+    const messageElement = document.getElementById("ProjectionResultMsg");
+    const selectionTable = document.getElementById("SelectionTable");
+    const tbody = selectionTable.querySelector("tbody");
+    const trows = tbody.querySelectorAll("tr");
+
+    messageElement.textContent = "Not implemented";
+}
+
+async function addNumericalCondToSelection(event) {
+    event.preventDefault();
+    const logic = document.getElementById("selectNumericalCond").value;
+    const attr = document.getElementById("selectNumericalAttr").value;
+    const cond = document.getElementById("selectNumericalIneq").value;
+    const input = document.getElementById("searchNumericalInput").value;
+
+    const tableElement = document.getElementById("SelectionTable");
+    const tableBody = tableElement.querySelector('tbody');
+    const row = tableBody.insertRow();
+    const cell1 = row.insertCell();
+    const cell2 = row.insertCell();
+    const cell3 = row.insertCell();
+    const cell4 = row.insertCell();
+    const cell5 = row.insertCell();
+
+    cell1.textContent = logic;
+    cell2.textContent = attr;
+    cell3.textContent = cond;
+    cell4.textContent = input;
+    const removeCondButton = document.createElement("button");
+    removeCondButton.addEventListener("click", function() {
+        row.remove();
+    });
+    removeCondButton.textContent = "Remove Condition";
+    cell5.append(removeCondButton);
+}
+
+async function addTextCondToSelection(event) {
+    event.preventDefault();
+    const logic = document.getElementById("selectTextCond").value;
+    const attr = document.getElementById("selectTextAttr").value;
+    const cond = document.getElementById("selectTextIneq").value;
+    const input = document.getElementById("searchTextInput").value;
+
+    const tableElement = document.getElementById("SelectionTable");
+    const tableBody = tableElement.querySelector('tbody');
+    const row = tableBody.insertRow();
+    const cell1 = row.insertCell();
+    const cell2 = row.insertCell();
+    const cell3 = row.insertCell();
+    const cell4 = row.insertCell();
+    const cell5 = row.insertCell();
+
+    cell1.textContent = logic;
+    cell2.textContent = attr;
+    cell3.textContent = cond;
+    cell4.textContent = input;
+    const removeCondButton = document.createElement("button");
+    removeCondButton.addEventListener("click", function() {
+        row.remove();
+    });
+    removeCondButton.textContent = "Remove Condition";
+    cell5.append(removeCondButton);
+}
+
+async function addTimeCondToSelection(event) {
+    event.preventDefault();
+    const logic = document.getElementById("selectTimeCond").value;
+    const attr = document.getElementById("selectTimeAttr").value;
+    const cond = document.getElementById("selectTimeIneq").value;
+    const input = document.getElementById("searchTimeInput").value;
+
+    const tableElement = document.getElementById("SelectionTable");
+    const tableBody = tableElement.querySelector('tbody');
+    const row = tableBody.insertRow();
+    const cell1 = row.insertCell();
+    const cell2 = row.insertCell();
+    const cell3 = row.insertCell();
+    const cell4 = row.insertCell();
+    const cell5 = row.insertCell();
+
+    cell1.textContent = logic;
+    cell2.textContent = attr;
+    cell3.textContent = cond;
+    cell4.textContent = input;
+    const removeCondButton = document.createElement("button");
+    removeCondButton.addEventListener("click", function() {
+        row.remove();
+    });
+    removeCondButton.textContent = "Remove Condition";
+    cell5.append(removeCondButton);
 }
 
 // 
@@ -507,6 +601,10 @@ window.onload = function() {
     document.getElementById("projectionEXP_Reward").addEventListener("click", addAttrToProjection);
     document.getElementById("projectionCurrencyReward").addEventListener("click", addAttrToProjection);
     document.getElementById("projectionEventID").addEventListener("click", addAttrToProjection);
+    document.getElementById("playerSelection").addEventListener("submit", playerSelection);
+    document.getElementById("searchNumerical").addEventListener("submit", addNumericalCondToSelection);
+    document.getElementById("searchText").addEventListener("submit", addTextCondToSelection);
+    document.getElementById("searchTime").addEventListener("submit", addTimeCondToSelection);
     document.getElementById("agregationWithHaving").addEventListener("submit", agregationWithHaving);
     document.getElementById("insertEnemy").addEventListener("submit", insertEnemy);
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
