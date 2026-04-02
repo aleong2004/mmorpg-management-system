@@ -116,10 +116,10 @@ async function reloadDB() {
 
     if (responseData.success) {
         messageElement.textContent = "Database successfully reloaded!";
-        fetchTableData();
-        //fetchAndDisplayPlayers();
-        //fetchAndDisplayEnemies();
-        //fetchAndDisplayItems();
+        //fetchTableData();
+        await fetchAndDisplayPlayers();
+        await fetchAndDisplayEnemies();
+        await fetchAndDisplayItems();
     } else {
         alert("Error reloading database!");
     }
@@ -147,10 +147,10 @@ async function deleteItem(event) {
 
     if (responseData.success) {
         messageElement.textContent = "Item deleted.";
-        fetchTableData();
-        fetchAndDisplayPlayers();
-        fetchAndDisplayEnemies();
-        fetchAndDisplayItems();
+        //fetchTableData();
+        await fetchAndDisplayPlayers();
+        await fetchAndDisplayEnemies();
+        await fetchAndDisplayItems();
     } else {
         messageElement.textContent = "Error: Cannot delete item.";
     }
@@ -620,10 +620,10 @@ async function updateEnemy(event) {
 
     if (responseData.success) {
         messageElement.textContent = "Enemy updated successfully!";
-        fetchTableData();
-        fetchAndDisplayPlayers();
-        fetchAndDisplayEnemies();
-        fetchAndDisplayItems();
+        //fetchTableData();
+        await fetchAndDisplayPlayers();
+        await fetchAndDisplayEnemies();
+        await fetchAndDisplayItems();
     } else {
         messageElement.textContent = "Error updating enemy!";
     }
