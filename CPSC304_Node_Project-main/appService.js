@@ -214,7 +214,35 @@ async function updateEnemy(npcId, enemySpecies, expDropped, goldDropped) {
 // STUFF
 
 // Insert query
-//async function insertEnemy(enemyData) { TODO: this shit got hands ;-;
+async function insertEnemy(npcId, enemySpecies, expDropped, goldDropped, name, npcLevel, baseStats, locationId) {
+    return await withOracleDB(async (connection) => {
+
+        //reject if no loc
+        if (await connection.execute(`SELECT * FROM Location WHERE LocationID = :locationId`,[locationId]).rows.length === 0) { return false; }
+
+        //create NPC if pcId doesn't match
+        if (await connection.execute(`SELECT * FROM NPC WHERE NPC_ID = :npcId`,[npcId]).length === 0) {
+            await connection.execute(
+                `INSERT INTO NPC (NPC_ID, Name, NPC_Level, BaseStats, LocationID)
+                 VALUES (:npcId, :name, :npcLevel, :baseStats, :locationId)`,
+                [npcId, name, npcLevel, baseStats, locationId],
+                { autoCommit: false }
+            );
+        }
+
+        //enemy tsert
+        await connection.execute(
+            `INSERT INTO Enemy (NPC_ID, EnemySpecies, EXPDropped, GoldDropped)
+             VALUES (:npcId, :enemySpecies, :expDropped, :goldDropped)`,
+            [npcId, enemySpecies, expDropped, goldDropped],
+            { autoCommit: true }
+        );
+
+        return true;
+    }).catch(() => {
+        return false;
+    });
+}
 
 //delete query
 async function deleteItem(itemId) {
@@ -276,5 +304,6 @@ module.exports = {
     agregationWithHaving,
     deleteItem,
     fetchEnemyData,
-    updateEnemy
+    updateEnemy,
+    insertEnemy
 };

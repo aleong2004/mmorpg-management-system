@@ -186,6 +186,46 @@ async function agregationWithHaving(event) {
     });
 }
 
+
+async function insertEnemy(event) {
+    event.preventDefault();
+
+    const npcIdValue = document.getElementById('insertNpcId').value;
+    const enemySpeciesValue = document.getElementById('insertEnemySpecies').value;
+    const expDroppedValue = document.getElementById('insertExpDropped').value;
+    const goldDroppedValue = document.getElementById('insertGoldDropped').value;
+    const npcNameValue = document.getElementById('insertNpcName').value;
+    const npcLevelValue = document.getElementById('insertNpcLevel').value;
+    const baseStatsValue = document.getElementById('insertBaseStats').value;
+    const locationIdValue = document.getElementById('insertLocationId').value;
+
+    const response = await fetch('/insert-enemy', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            npcId: npcIdValue,
+            enemySpecies: enemySpeciesValue,
+            expDropped: expDroppedValue,
+            goldDropped: goldDroppedValue,
+            name: npcNameValue,
+            npcLevel: npcLevelValue,
+            baseStats: baseStatsValue,
+            locationId: locationIdValue
+        })
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('insertResultMsg');
+
+   if (responseData.success) {
+        messageElement.textContent = "Data inserted successfully!";
+    } else {
+        messageElement.textContent = "Error inserting data!";
+    }
+}
+
 // Inserts new records into the demotable.
 async function insertDemotable(event) {
     event.preventDefault();
@@ -326,6 +366,7 @@ window.onload = function() {
     document.getElementById("reloadDatabase").addEventListener("click", reloadDB);
     document.getElementById("deleteItem").addEventListener("submit", deleteItem);
     document.getElementById("agregationWithHaving").addEventListener("submit", agregationWithHaving);
+    document.getElementById("insertEnemy").addEventListener("submit", insertEnemy);
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
     // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countDemotable").addEventListener("click", countDemotable);
