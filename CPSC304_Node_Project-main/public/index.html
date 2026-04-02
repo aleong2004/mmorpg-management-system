@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Link to the external CSS stylesheet. Uncomment if you wish to customize or add styling. -->
-    <!-- <link rel="stylesheet" href="styles.css">   -->
+    <link rel="stylesheet" href="styles.css">  
 
     <title>Database Application</title>
 </head>
@@ -22,375 +22,458 @@
         <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
     </h1>
 
-    <br><hr><br> <!-- ========================================================================= -->
+    <h1>
+        MMORPG Moderator Dashboard - 
+        <span id="dbStatus"> </span>
+        <!-- A loading GIF, will be hided once get the status. -->
+        <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
+    </h1>
 
-    <!-- Show Player table (this is mostly for testing). 
-        Data will be fetched and inserted here dynamically using JavaScript. -->
-    <h2>Show Player Data</h2>
-    <table id="playerTable" border="1">
-        <thead>
-            <tr>
-                <!--Table head, need to be adjusted accordingly to align with your own.-->
-                <th>Username</th>
-                <th>Level</th>
-                <th>Base Stats</th>
-                <th>Currency</th>
-                <th>Mana</th>
-                <th>Last Seen Online</th>
-                <th>Profession ID</th>
-                <th>Profession Name</th>
-                <th>Class ID</th>
-                <th>Class Name</th>
-                <th>Clan Name</th>
-                <th>Location ID</th>
-                <th>Location Name</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <!-- buttons of the main tab for navigation -->
+    <div class="tab-bar">
+        <button class="tab-btn active" onclick="showTab('players')">Players</button>
+        <button class="tab-btn" onclick="showTab('enemies')">Enemies</button>
+        <button class="tab-btn" onclick="showTab('items')">Items</button>
+        <button class="tab-btn" onclick="showTab('quests')">Quests</button>
+        <button class="tab-btn" onclick="showTab('clans')">Clans</button>
+        <button class="tab-btn" onclick="showTab('locations')">Locations</button>
+        <button class="tab-btn" onclick="showTab('admin')">Admin</button>
+    </div>
 
-    <br><hr><br> <!-- ========================================================================= -->
+     <!-- ========================================================================= -->
 
-    <h2>Reload Database</h2>
-    <p>Press the button to reload the database. This will undo any changes that have been made. If this is the first time you're running this page, you MUST reset the database.</p>
-    <button id="reloadDatabase"> Reload </button> <br>
-    <!-- A placeholder to display messages related to the reset operation. -->
-    <div id="reloadResultMsg"></div>
+    <div id="tab-players" class="tab-content active">
 
-    <br><hr><br> <!-- ========================================================================= -->
+        <br><hr><br>
+        <!-- Show Player table (this is mostly for testing). 
+                Data will be fetched and inserted here dynamically using JavaScript. -->
+        <h2>Show Player Data</h2>
+        <table id="playerTable" border="1">
+            <thead>
+                <tr>
+                    <!--Table head, need to be adjusted accordingly to align with your own.-->
+                    <th>Username</th>
+                    <th>Level</th>
+                    <th>Base Stats</th>
+                    <th>Currency</th>
+                    <th>Mana</th>
+                    <th>Last Seen Online</th>
+                    <th>Profession ID</th>
+                    <th>Profession Name</th>
+                    <th>Class ID</th>
+                    <th>Class Name</th>
+                    <th>Clan Name</th>
+                    <th>Location ID</th>
+                    <th>Location Name</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
 
-    <h2>Delete Item</h2>
-    <p>Enter an item ID to delete an item.</p>
-    <form id="deleteItem">
-        Item ID: <input type="number" id="deleteItemId" placeholder="Enter Item ID" required> <br><br>
+        <br><hr><br> <!-- ========================================================================= -->
+        
+        <h2>Player Search</h2>
+        <p>
+            Search for players that meet certain conditions. Conditions are evaluated in the order they were added.<br>
+            Logical operators AND/OR will be ignored for the first condition.
+        </p>
+        <form id="searchNumerical">
+            <div>
+                Numerical Attributes:<br>
+                <select id="selectNumericalCond" name="selectNumericalCond">
+                    <option value="AND">AND</option>
+                    <option value="OR">OR</option>
+                </select>
+                <select id="selectNumericalAttr" name="selectNumericalAttr">
+                    <option value="Player Level">Level</option>
+                    <option value="Currency">Currency</option>
+                    <option value="Mana">Mana</option>
+                    <option value="Profession ID">Profession ID</option>
+                    <option value="Class ID">Class ID</option>
+                    <option value="Location ID">Location ID</option>
+                </select>
+                <select id="selectNumericalIneq" name="selectNumericalIneq">
+                    <option value="is equal to">is equal to</option>
+                    <option value="is not equal to">is not equal to</option>
+                    <option value="is greater than">is greater than</option>
+                    <option value="is greater than or equal to">is greater than or equal to</option>
+                    <option value="is less than">is less than</option>
+                    <option value="is less than or equal to">is less than or equal to</option>
+                </select>
+                <input type="number" id="searchNumericalInput" placeholder="Enter a number" required></input>
+                <button type="submit">Add condition</button> <br>
+            </div>
+        </form>
+        <br>
+        <form id="searchText">
+            <div>
+                Text Attributes:<br>
+                <select id="selectTextCond" name="selectTextCond">
+                    <option value="AND">AND</option>
+                    <option value="OR">OR</option>
+                </select>
+                <select id="selectTextAttr" name="selectTextAttr">
+                    <option value="Username">Username</option>
+                    <option value="Profession Name">Profession Name</option>
+                    <option value="Class Name">Class Name</option>
+                    <option value="Clan Name">Clan Name</option>
+                    <option value="Location Name">Location Name</option>
+                    <option value="Base Stats">Base Stats</option>
+                </select>
+                <select id="selectTextIneq" name="selectTextIneq">
+                    <option value="contains">contains</option>
+                </select>
+                <input type="text" id="searchTextInput" placeholder="Type here" required></input>
+                <button type="submit">Add condition</button> <br>
+            </div>
+        </form>
+        <br>
+        <form id="searchTime">
+            <div>
+                Time Attributes:<br>
+                <select id="selectTimeCond" name="selectTimeCond">
+                    <option value="AND">AND</option>
+                    <option value="OR">OR</option>
+                </select>
+                <select id="selectTimeAttr" name="selectTimeAttr">
+                    <option value="Last Seen Online">Last Seen Online</option>
+                </select>
+                <select id="selectTimeIneq" name="selectTimeIneq">
+                    <option value="is equal to">is equal to</option>
+                    <option value="is not equal to">is not equal to</option>
+                    <option value="is greater than">is greater than</option>
+                    <option value="is greater than or equal to">is greater than or equal to</option>
+                    <option value="is less than">is less than</option>
+                    <option value="is less than or equal to">is less than or equal to</option>
+                </select>
+                <input type="datetime-local" id="searchTimeInput" min="2000-01-01T00:00" max="9999-12-31T23:59"
+                    placeholder="Enter a Time" required></input>
+                <button type="submit">Add condition</button> <br>
+            </div>
+        </form>
+        <br>
+        Added conditions:
+        <table id="SelectionTable" border="1">
+            <thead>
+                <tr>
+                    <th>Condition</th>
+                    <th>Attribute</th>
+                    <th>Inequality</th>
+                    <th>Value</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <form id="playerSelection">
+            <button type="submit">Find Players</button> <br>
+        </form>
+        <br><br>
+        <div id="SelectionResultMsg"></div>
+        <table id="selectedPlayerTable" border="1">
+            <thead>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
 
-        <button type="submit"> delete </button> <br>
-    </form>
-    <div id="deleteItemResultMsg"></div>
-    <br><hr><br> <!-- ========================================================================= -->
+        <br><hr><br> <!-- ========================================================================= -->
+        
+        <h2>Player Abilities</h2>
+        <p>Enter a username to see all abilities that player has access to based on their class.</p>
+        
+        <form id="playerAbilitiesForm">
+            Username: <input type="text" id="abilityUsername" placeholder="Enter username" required> <br><br>
+            <button type="submit">Search</button>
+        </form>
+        <div id="playerAbilitiesResultMsg"></div>
+        
+        <table id="playerAbilitiesTable" border="1">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Class</th>
+                    <th>Ability</th>
+                    <th>Mana Cost</th>
+                    <th>Cooldown</th>
+                    <th>Base Damage</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
 
-    <h2>Item Data</h2>
-    <table id="itemTable" border="1">
-        <thead>
-            <tr>
-                <th>ItemID</th>
-                <th>Name</th>
-                <th>ItemType</th>
-                <th>BaseCost</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
 
-    <br><hr><br> <!-- ========================================================================= -->
 
-    <h2>View Quest Data</h2>
-    <p>
-        Add attributes to return. Attribute will be shown from left to right based on the order they were added.<br>
-    </p>
-    <ul>
-        <li>Quest ID: <button type="click" id="projectionQuestID"> Add Attribute</button> </li>
-        <li>Name: <button type="click" id="projectionName"> Add Attribute</button> </li>
-        <li>Minimum Level: <button type="click" id="projectionMinLevel"> Add Attribute</button> </li>
-        <li>EXP Reward: <button type="click" id="projectionEXP_Reward"> Add Attribute</button> </li>
-        <li>Currency Reward: <button type="click" id="projectionCurrencyReward"> Add Attribute</button> </li>
-        <li>Event ID: <button type="click" id="projectionEventID"> Add Attribute</button> </li>
-    </ul>
-    <br>
-    Added attributes:
-    <table id="projectionTable" border="1">
-        <tbody>
-        </tbody>
-    </table>
-    <form id="questProjection">
-        <button type="submit">View Data</button> <br>
-    </form>
-    <br><br>
-    <div id="ProjectionResultMsg"></div>
-    <table id="questTable" border="1">
-        <thead>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    </div>
 
-    <br><hr><br> <!-- ========================================================================= -->
+    <!-- now the enemies tab -->
+    <div id="tab-enemies" class="tab-content">
 
-    <h2>Player Search</h2>
-    <p>
-        Search for players that meet certain conditions. Conditions are evaluated in the order they were added.<br>
-        Logical operators AND/OR will be ignored for the first condition.
-    </p>
-    <form id="searchNumerical">
-        <div>
-            Numerical Attributes:<br>
-            <select id="selectNumericalCond" name="selectNumericalCond">
-                <option value="AND">AND</option>
-                <option value="OR">OR</option>
-            </select>
-            <select id="selectNumericalAttr" name="selectNumericalAttr">
-                <option value="Player Level">Level</option>
-                <option value="Currency">Currency</option>
-                <option value="Mana">Mana</option>
-                <option value="Profession ID">Profession ID</option>
-                <option value="Class ID">Class ID</option>
-                <option value="Location ID">Location ID</option>
-            </select>
-            <select id="selectNumericalIneq" name="selectNumericalIneq">
-                <option value="is equal to">is equal to</option>
-                <option value="is not equal to">is not equal to</option>
-                <option value="is greater than">is greater than</option>
-                <option value="is greater than or equal to">is greater than or equal to</option>
-                <option value="is less than">is less than</option>
-                <option value="is less than or equal to">is less than or equal to</option>
-            </select>
-            <input type="number" id="searchNumericalInput" placeholder="Enter a number" required></input>
-            <button type="submit">Add condition</button> <br>
-        </div>
-    </form>
-    <br>
-    <form id="searchText">
-        <div>
-            Text Attributes:<br>
-            <select id="selectTextCond" name="selectTextCond">
-                <option value="AND">AND</option>
-                <option value="OR">OR</option>
-            </select>
-            <select id="selectTextAttr" name="selectTextAttr">
-                <option value="Username">Username</option>
-                <option value="Profession Name">Profession Name</option>
-                <option value="Class Name">Class Name</option>
-                <option value="Clan Name">Clan Name</option>
-                <option value="Location Name">Location Name</option>
-                <option value="Base Stats">Base Stats</option>
-            </select>
-            <select id="selectTextIneq" name="selectTextIneq">
-                <option value="contains">contains</option>
-            </select>
-            <input type="text" id="searchTextInput" placeholder="Type here" required></input>
-            <button type="submit">Add condition</button> <br>
-        </div>
-    </form>
-    <br>
-    <form id="searchTime">
-        <div>
-            Time Attributes:<br>
-            <select id="selectTimeCond" name="selectTimeCond">
-                <option value="AND">AND</option>
-                <option value="OR">OR</option>
-            </select>
-            <select id="selectTimeAttr" name="selectTimeAttr">
-                <option value="Last Seen Online">Last Seen Online</option>
-            </select>
-            <select id="selectTimeIneq" name="selectTimeIneq">
-                <option value="is equal to">is equal to</option>
-                <option value="is not equal to">is not equal to</option>
-                <option value="is greater than">is greater than</option>
-                <option value="is greater than or equal to">is greater than or equal to</option>
-                <option value="is less than">is less than</option>
-                <option value="is less than or equal to">is less than or equal to</option>
-            </select>
-            <input type="datetime-local" id="searchTimeInput" min="2000-01-01T00:00" max="9999-12-31T23:59" placeholder="Enter a Time" required></input>
-            <button type="submit">Add condition</button> <br>
-        </div>
-    </form>
-    <br>
-    Added conditions:
-    <table id="SelectionTable" border="1">
-        <thead>
-            <tr>
-                <th>Condition</th>
-                <th>Attribute</th>
-                <th>Inequality</th>
-                <th>Value</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
-    <form id="playerSelection">
-        <button type="submit">Find Players</button> <br>
-    </form>
-    <br><br>
-    <div id="SelectionResultMsg"></div>
-    <table id="selectedPlayerTable" border="1">
-        <thead>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+        <br><hr><br> <!-- ========================================================================= -->
+        
+        <h2>Add Enemies</h2>
+        <p>Fill the fields below to insert an enemy.</p>
+        <form id="insertEnemy">
+            NPC ID: <input type="number" id="insertNpcId" placeholder="Enter NPC ID" required> <br><br>
+            Enemy Species: <input type="text" id="insertEnemySpecies" placeholder="Enter Enemy Species" required> <br><br>
+            EXP Dropped: <input type="number" id="insertExpDropped" placeholder="Enter EXP Dropped" required> <br><br>
+            Gold Dropped: <input type="number" id="insertGoldDropped" placeholder="Enter Gold Dropped" required> <br><br>
+            Name: <input type="text" id="insertNpcName" placeholder="Enter Name" required> <br><br>
+            NPC Level: <input type="number" id="insertNpcLevel" placeholder="Enter NPC Level" required> <br><br>
+            Base Stats: <input type="text" id="insertBaseStats" placeholder="Enter Base Stats" required> <br><br>
+            Location ID: <input type="number" id="insertLocationId" placeholder="Enter Location ID" required> <br><br>
+        
+            <button type="submit"> Insert </button> <br>
+        </form>
+        <div id="insertResultMsg"></div>
 
-<br><hr><br> <!-- ========================================================================= -->
 
-    <h2>Clan Information</h2>
-    <p>Show data for clans that have more members than the specified amount.</p>
-    <form id="agregationWithHaving">
-        Minimum Players: <input type="number" id="minPlayerCount" placeholder="Min players" required> <br><br>
 
-        <button type="submit"> Show Data </button> <br>
-    </form>
+        <br><hr><br> <!-- ========================================================================= -->
+        
+        <h2>Update Enemy Attributes</h2>
+        <p>Select an Enemy from the table below to edit its attributes,
+            then submit the form.
+        </p>
+        
+        <table id="enemyTable" border="1">
+            <thead>
+                <tr>
+                    <th>NPC ID</th>
+                    <th>Name</th>
+                    <th>NPC Level</th>
+                    <th>Base Stats</th>
+                    <th>Location ID</th>
+                    <th>Enemy Species</th>
+                    <th>EXP Dropped</th>
+                    <th>Gold Dropped</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        
+        <br>
+        <form id="updateEnemyForm">
+            NPC ID: <input type="number" id="updateNpcId" placeholder="NPC ID" required readonly> <br><br>
+            Name: <input type="text" id="updateName" placeholder="Name" required> <br><br>
+            NPC Level: <input type="number" id="updateNpcLevel" placeholder="NPC Level" required> <br><br>
+            Base Stats: <input type="text" id="updateBaseStats" placeholder="Base Stats" required> <br><br>
+            Location ID: <input type="number" id="updateLocationId" placeholder="Location ID" required> <br><br>
+            Enemy Species: <input type="text" id="updateEnemySpecies" placeholder="Enemy Species" required> <br><br>
+            EXP Dropped: <input type="number" id="updateExpDropped" placeholder="EXP Dropped" required> <br><br>
+            Gold Dropped: <input type="number" id="updateGoldDropped" placeholder="Gold Dropped" required> <br><br>
+            <button type="submit">Update Enemy</button>
+        </form>
+        <div id="updateEnemyResultMsg"></div>
 
-    <div id="agregationWithHavingResultMsg"></div>
+        <br>
+        <hr><br>
+        <h2>Show Strong NPCs</h2>
+        <p>Find all the strong NPCs. An NPC is considered strong if its level is greater than the average NPC level at every
+            location.</p>
+        <button id="strongNPCs">Run Query</button>
+        <div id="strongNPCsResultMsg"></div>
+        <table id="strongNPCsTable" border="1">
+            <thead>
+                <tr>
+                    <th>NPC ID</th>
+                    <th>NPC Name</th>
+                    <th>Level</th>
+                    <th>Base Stats</th>
+                    <th>Location ID</th>
+                    <th>Location Name</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
 
-    <table id="agregationWithHavingTable" border="1">
-        <thead>
-            <tr>
-                <!--Table head, need to be adjusted accordingly to align with your own.-->
-                <th>Clan Name</th>
-                <th>Min Level To Join</th>
-                <th>Clan Rank</th>
-                <th>Num Members</th>
-                <th>Min Player Level</th>
-                <th>Max Player Level</th>
-                <th>Avg Player Level</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
 
-<br><hr><br> <!-- ========================================================================= -->
+    </div>
 
-    <h2>Add Enemies</h2>
-    <p>Fill the fields below to insert an enemy.</p>
-    <form id="insertEnemy">
-        NPC ID: <input type="number" id="insertNpcId" placeholder="Enter NPC ID" required> <br><br>
-        Enemy Species: <input type="text" id="insertEnemySpecies" placeholder="Enter Enemy Species" required> <br><br>
-        EXP Dropped: <input type="number" id="insertExpDropped" placeholder="Enter EXP Dropped" required> <br><br>
-        Gold Dropped: <input type="number" id="insertGoldDropped" placeholder="Enter Gold Dropped" required> <br><br>
-        Name: <input type="text" id="insertNpcName" placeholder="Enter Name" required> <br><br>
-        NPC Level: <input type="number" id="insertNpcLevel" placeholder="Enter NPC Level" required> <br><br>
-        Base Stats: <input type="text" id="insertBaseStats" placeholder="Enter Base Stats" required> <br><br>
-        Location ID: <input type="number" id="insertLocationId" placeholder="Enter Location ID" required> <br><br>
+    <!-- now the items tab -->
+    <div id="tab-items" class="tab-content">
 
-        <button type="submit"> Insert </button> <br>
-    </form>
-    <div id="insertResultMsg"></div>
+        <br><hr><br> <!-- ========================================================================= -->
+        <h2>Item Data</h2>
+        <table id="itemTable" border="1">
+            <thead>
+                <tr>
+                    <th>ItemID</th>
+                    <th>Name</th>
+                    <th>ItemType</th>
+                    <th>BaseCost</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
 
-<br><hr><br> <!-- ========================================================================= -->
+        <br><hr><br> <!-- ========================================================================= -->
+        
+        <h2>Delete Item</h2>
+        <p>Enter an item ID to delete an item.</p>
+        <form id="deleteItem">
+            Item ID: <input type="number" id="deleteItemId" placeholder="Enter Item ID" required> <br><br>
+            <button type="submit"> delete </button> <br>
+        </form>
+        <div id="deleteItemResultMsg"></div>
 
-    <h2>Update Enemy Attributes</h2>
-    <p>Select an Enemy from the table below to edit its attributes,
-        then submit the form.
-    </p>
 
-    <table id="enemyTable" border="1">
-        <thead>
-            <tr>
-                <th>NPC ID</th>
-                <th>Name</th>
-                <th>NPC Level</th>
-                <th>Base Stats</th>
-                <th>Location ID</th>
-                <th>Enemy Species</th>
-                <th>EXP Dropped</th>
-                <th>Gold Dropped</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    </div>
+
+    <!-- quests tab -->
+    <div id="tab-quests" class="tab-content">
+
+        <br><hr><br> <!-- ========================================================================= -->
+        
+        <h2>View Quest Data</h2>
+        <p>
+            Add attributes to return. Attribute will be shown from left to right based on the order they were added.<br>
+        </p>
+        <ul>
+            <li>Quest ID: <button type="click" id="projectionQuestID"> Add Attribute</button> </li>
+            <li>Name: <button type="click" id="projectionName"> Add Attribute</button> </li>
+            <li>Minimum Level: <button type="click" id="projectionMinLevel"> Add Attribute</button> </li>
+            <li>EXP Reward: <button type="click" id="projectionEXP_Reward"> Add Attribute</button> </li>
+            <li>Currency Reward: <button type="click" id="projectionCurrencyReward"> Add Attribute</button> </li>
+            <li>Event ID: <button type="click" id="projectionEventID"> Add Attribute</button> </li>
+        </ul>
+        <br>
+        Added attributes:
+        <table id="projectionTable" border="1">
+            <tbody>
+            </tbody>
+        </table>
+        <form id="questProjection">
+            <button type="submit">View Data</button> <br>
+        </form>
+        <br><br>
+        <div id="ProjectionResultMsg"></div>
+        <table id="questTable" border="1">
+            <thead>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     
-    <br>
-    <form id="updateEnemyForm">
-        NPC ID: <input type="number" id="updateNpcId" placeholder="NPC ID" required readonly> <br><br>
-        Name: <input type="text" id="updateName" placeholder="Name" required> <br><br>
-        NPC Level: <input type="number" id="updateNpcLevel" placeholder="NPC Level" required> <br><br>
-        Base Stats: <input type="text" id="updateBaseStats" placeholder="Base Stats" required> <br><br>
-        Location ID: <input type="number" id="updateLocationId" placeholder="Location ID" required> <br><br>
-        Enemy Species: <input type="text" id="updateEnemySpecies" placeholder="Enemy Species" required> <br><br>
-        EXP Dropped: <input type="number" id="updateExpDropped" placeholder="EXP Dropped" required> <br><br>
-        Gold Dropped: <input type="number" id="updateGoldDropped" placeholder="Gold Dropped" required> <br><br>
-        <button type="submit">Update Enemy</button>
-    </form>
-    <div id="updateEnemyResultMsg"></div>
-    
-    <br><hr><br> <!-- ========================================================================= -->
+    </div>
 
-    <h2>Player Abilities</h2>
-    <p>Enter a username to see all abilities that player has access to based on their class.</p>
-    
-    <form id="playerAbilitiesForm">
-        Username: <input type="text" id="abilityUsername" placeholder="Enter username" required> <br><br>
-        <button type="submit">Search</button>
-    </form>
-    <div id="playerAbilitiesResultMsg"></div>
-    
-    <table id="playerAbilitiesTable" border="1">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Class</th>
-                <th>Ability</th>
-                <th>Mana Cost</th>
-                <th>Cooldown</th>
-                <th>Base Damage</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
 
-    <br>
-    <hr><br>
-    
-    <h2>Players Who Are Friends With All Other Clan Members</h2>
-    <p>Find players who are friends with every other member of their clan.</p>
-    
-    <button id="divisionQuery">Run Query</button>
-    <div id="divisionResultMsg"></div>
-    
-    <table id="divisionTable" border="1">
-        <thead>
-            <tr>
-                <th>Username</th>
-                <th>Clan Name</th>
-                <th>Clan Rank</th>
-                <th>Num Members</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
 
-    <br><hr><br>
-    <h2>Show Player Count by Location</h2>
-    <p>Find the number of players at each location.</p>
-    <button id="playerCountsByLocation">Run Query</button>
-    <div id="playerCountsResultMsg"></div>
-    <table id="playerCountsTable" border="1">
-        <thead>
-            <tr>
-                <th>Location ID</th>
-                <th>Location Name</th>
-                <th>Player Count</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <!-- Clans tab now -->
 
-    <br><hr><br>
-    <h2>Show Strong NPCs</h2>
-    <p>Find all the strong NPCs. An NPC is considered strong if its level is greater than the average NPC level at every location.</p>
-    <button id="strongNPCs">Run Query</button>
-    <div id="strongNPCsResultMsg"></div>
-    <table id="strongNPCsTable" border="1">
-        <thead>
-            <tr>
-                <th>NPC ID</th>
-                <th>NPC Name</th>
-                <th>Level</th>
-                <th>Base Stats</th>
-                <th>Location ID</th>
-                <th>Location Name</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+    <div id="tab-clans" class="tab-content">
+
+        <br>
+        <hr><br> <!-- ========================================================================= -->
+        
+        <h2>Clan Information</h2>
+        <p>Show data for clans that have more members than the specified amount.</p>
+        <form id="agregationWithHaving">
+            Minimum Players: <input type="number" id="minPlayerCount" placeholder="Min players" required> <br><br>
+        
+            <button type="submit"> Show Data </button> <br>
+        </form>
+        
+        <div id="agregationWithHavingResultMsg"></div>
+        
+        <table id="agregationWithHavingTable" border="1">
+            <thead>
+                <tr>
+                    <!--Table head, need to be adjusted accordingly to align with your own.-->
+                    <th>Clan Name</th>
+                    <th>Min Level To Join</th>
+                    <th>Clan Rank</th>
+                    <th>Num Members</th>
+                    <th>Min Player Level</th>
+                    <th>Max Player Level</th>
+                    <th>Avg Player Level</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        
+        
+        
+        
+        
+        
+        <br>
+        <hr><br>
+        
+        <h2>Players Who Are Friends With All Other Clan Members</h2>
+        <p>Find players who are friends with every other member of their clan.</p>
+        
+        <button id="divisionQuery">Run Query</button>
+        <div id="divisionResultMsg"></div>
+        
+        <table id="divisionTable" border="1">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Clan Name</th>
+                    <th>Clan Rank</th>
+                    <th>Num Members</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        
+
+
+    </div>
+
+    <!-- locations -->
+     <div id="tab-locations" class="tab-content">
+        <br><hr><br>
+        <h2>Show Player Count by Location</h2>
+        <p>Find the number of players at each location.</p>
+        <button id="playerCountsByLocation">Run Query</button>
+        <div id="playerCountsResultMsg"></div>
+        <table id="playerCountsTable" border="1">
+            <thead>
+                <tr>
+                    <th>Location ID</th>
+                    <th>Location Name</th>
+                    <th>Player Count</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+     </div>
+
+    <!-- final admin tab for reloading -->
+
+    <div id="tab-locations" class="tab-content">
+        <br><hr><br> <!-- ========================================================================= -->
+        <h2>Reload Database</h2>
+        <p>Press the button to reload the database. This will undo any changes that have been made. If this is the first time
+            you're running this page, you MUST reset the database.</p>
+        <button id="reloadDatabase"> Reload </button> <br>
+        <!-- A placeholder to display messages related to the reset operation. -->
+        <div id="reloadResultMsg"></div>
+
+    </div>
+    
+
+    
+    
+    
+
+   
+
+
+    
+
+
+    
 
     <!-- ===================================================================================== -->
     <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
