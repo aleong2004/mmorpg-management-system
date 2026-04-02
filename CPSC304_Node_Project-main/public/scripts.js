@@ -386,6 +386,34 @@ async function getPlayerAbilities(event) {
     
 }
 
+async function friendsWithAllClanMembers() {
+    const response = await fetch('/friends-with-all-clan-members', {
+        method:'GET'
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('divisionResultMsg');
+    const tableElement = document.getElementById('divisionTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    if (tableBody) tableBody.innerHTML = '';
+
+    if (responseData.data.length === 0) {
+        messageElement.textContent = "No players found.";
+        return;
+    }
+
+    messageElement.textContent = '';
+    responseData.data.forEach(row => {
+        const tableRow = tableBody.insertRow();
+        row.forEach((field, index) => {
+            const cell = tableRow.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+    
+}
+
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
@@ -403,7 +431,8 @@ window.onload = function() {
     // document.getElementById("countDemotable").addEventListener("click", countDemotable);
     document.getElementById("updateEnemyForm").addEventListener("submit", updateEnemy);
     document.getElementById("playerAbilitiesForm").addEventListener("submit", getPlayerAbilities);
-
+    document.getElementById("divisionQuery").addEventListener("click", friendsWithAllClanMembers);
+    
 };
 
 // General function to refresh the displayed table data. 
