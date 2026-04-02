@@ -741,6 +741,17 @@ async function fetchAndDisplayStrongNPCs() {
     });
 }
 
+function showTab(tabName, btn) {
+    document.querySelectorAll('.tab-content').forEach(tab => {
+        tab.classList.remove('active');
+    });
+    document.querySelectorAll('.tab-btn').forEach(b => {
+        b.classList.remove('active');
+    });
+    document.getElementById('tab-' + tabName).classList.add('active');
+    btn.classList.add('active');
+}
+
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.

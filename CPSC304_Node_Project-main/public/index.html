@@ -15,12 +15,12 @@
     <!-- Display the current status of the database connection. 
          !!HERE TO HELP U DEBUGGING, NOT REQUIRED IN YOUR OWN PROJECT!!
          -->
-    <h1>Database Connection Status: 
-        <!-- An in-line placeholder to display connection status. -->
+    <!-- <h1>Database Connection Status: 
+        An in-line placeholder to display connection status.
         <span id="dbStatus"> </span>
-        <!-- A loading GIF, will be hided once get the status. -->
+        A loading GIF, will be hided once get the status.
         <img id="loadingGif" class="loading-gif" src="loading_100px.gif" alt="Loading...">
-    </h1>
+    </h1> -->
 
     <h1>
         MMORPG Moderator Dashboard - 
@@ -31,13 +31,13 @@
 
     <!-- buttons of the main tab for navigation -->
     <div class="tab-bar">
-        <button class="tab-btn active" onclick="showTab('players')">Players</button>
-        <button class="tab-btn" onclick="showTab('enemies')">Enemies</button>
-        <button class="tab-btn" onclick="showTab('items')">Items</button>
-        <button class="tab-btn" onclick="showTab('quests')">Quests</button>
-        <button class="tab-btn" onclick="showTab('clans')">Clans</button>
-        <button class="tab-btn" onclick="showTab('locations')">Locations</button>
-        <button class="tab-btn" onclick="showTab('admin')">Admin</button>
+        <button class="tab-btn active" onclick="showTab('players', this)">Players</button>
+        <button class="tab-btn" onclick="showTab('enemies', this)">Enemies</button>
+        <button class="tab-btn" onclick="showTab('items', this)">Items</button>
+        <button class="tab-btn" onclick="showTab('quests', this)">Quests</button>
+        <button class="tab-btn" onclick="showTab('clans', this)">Clans</button>
+        <button class="tab-btn" onclick="showTab('locations', this)">Locations</button>
+        <button class="tab-btn" onclick="showTab('admin', this)">Admin</button>
     </div>
 
      <!-- ========================================================================= -->
@@ -451,7 +451,7 @@
 
     <!-- final admin tab for reloading -->
 
-    <div id="tab-locations" class="tab-content">
+    <div id="tab-admin" class="tab-content">
         <br><hr><br> <!-- ========================================================================= -->
         <h2>Reload Database</h2>
         <p>Press the button to reload the database. This will undo any changes that have been made. If this is the first time
@@ -462,19 +462,6 @@
 
     </div>
     
-
-    
-    
-    
-
-   
-
-
-    
-
-
-    
-
     <!-- ===================================================================================== -->
     <!-- External JavaScript file that contains the functionality/logic for the operations above. -->
     <script src="scripts.js"></script>
