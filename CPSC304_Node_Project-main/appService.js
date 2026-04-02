@@ -366,10 +366,6 @@ async function selectPlayers(condList) {
         console.log(parsedList);
         for (const cond of parsedList) {
             if (!conds.includes(cond[0]) || !columns.includes(cond[1]) || !inequalities.includes(cond[2])) {
-                console.log(cond);
-                console.log(!conds.includes(cond[0]));
-                console.log(!columns.includes(cond[1]));
-                console.log(inequalities.includes(cond[2]));
                 return -2;
             }
         }
@@ -379,18 +375,21 @@ async function selectPlayers(condList) {
         for (let i = 0; i < parsedList.length; i++) {
             const curr_cond = parsedList[i];
             const key = `var${i}`;
-            if (curr_cond[2] !== "LIKE") {
-                if (i === 0) {
-                    where_clause = `${where_clause}(${curr_cond[1]} ${curr_cond[2]} :${key})`;
-                } else {
-                    where_clause = `${where_clause} ${curr_cond[0]} (${curr_cond[1]} ${curr_cond[2]} :${key})`;
-                }
+            if (i === 0) {
+                where_clause = `${where_clause} `
             } else {
-                if (i === 0) {
-                    where_clause = `${where_clause}(LOWER(${curr_cond[1]}) ${curr_cond[2]} :${key})`;
-                } else {
-                    where_clause = `${where_clause} ${curr_cond[0]} (LOWER(${curr_cond[1]}) ${curr_cond[2]} :${key})`;
+                where_clause = `${where_clause} ${curr_cond[0]}`
+            }
+
+            if (curr_cond[1] === "p.LastSeenOnline") {
+                where_clause = `${where_clause} (TO_TIMESTAMP(${curr_cond[1]}, 'YYYY-MM-DD HH24:MI:SS') ${curr_cond[2]} :${key})`;
+            } else if (curr_cond[2] === "LIKE") {
+                if (curr_cond[1] === "p.LastSeenOnline") { // should never happen
+                    return -1;
                 }
+                where_clause = `${where_clause} (LOWER(${curr_cond[1]}) ${curr_cond[2]} :${key})`;
+            } else {
+                where_clause = `${where_clause} (${curr_cond[1]} ${curr_cond[2]} :${key})`;
             }
             
             binds[key] = curr_cond[3];
@@ -458,6 +457,10 @@ function parseCondList(condList) {
 
         if (cond[2] === "LIKE") {
             cond[3] = `%${cond[3].toLowerCase()}%`;
+        }
+
+        if (cond[1] === "LIKE") {
+            cond[3] = `%${cond[3].replace("T", " ")}%`;
         }
     }
     return condList;
