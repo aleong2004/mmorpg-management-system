@@ -130,7 +130,7 @@
 
     <br><hr><br> <!-- ========================================================================= -->
 
-    <h2>Update Name in DemoTable</h2>
+    <!-- <h2>Update Name in DemoTable</h2>
     <p>The values are case sensitive and if you enter in the wrong case, the update statement will not do anything.</p>
     <form id="updataNameDemotable">
         Old Name: <input type="text" id="updateOldName" placeholder="Enter Old Name" required> <br><br>
@@ -139,8 +139,37 @@
         <button type="submit"> update </button> <br>
     </form>
     <!-- A placeholder to display messages related to the update operation. -->
-    <div id="updateNameResultMsg"></div>
+    <!-- <div id="updateNameResultMsg"></div> --> -->
 
+    <h2>Update Enemy</h2>
+    <p>Select an Enemy from the table below to edit its attributes,
+        then submit the form.
+    </p>
+
+    <table id="enemyTable" border="1">
+        <thead>
+            <tr>
+                <th>NPC ID</th>
+                <th>Name</th>
+                <th>Enemy Species</th>
+                <th>EXP Dropped</th>
+                <th>Gold Dropped</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <br>
+    <form id="updateEnemyForm">
+        NPC ID: <input type="number" id="updateNpcId" placeholder="NPC ID" required readonly> <br><br>
+        Enemy Species: <input type="text" id="updateEnemySpecies" placeholder="Enemy Species" required> <br><br>
+        EXP Dropped: <input type="number" id="updateExpDropped" placeholder="EXP Dropped" required> <br><br>
+        Gold Dropped: <input type="number" id="updateGoldDropped" placeholder="Gold Dropped" required> <br><br>
+        <button type="submit">Update Enemy</button>
+    </form>
+    <div id="updateEnemyResultMsg"></div>
+    
     <br><hr><br> <!-- ========================================================================= -->
 
     <h2>Count the Tuples in DemoTable</h2>

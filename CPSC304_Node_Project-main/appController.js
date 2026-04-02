@@ -104,5 +104,19 @@ router.get('/count-demotable', async (req, res) => {
     }
 });
 
+router.get('/enemy-table', async (req,res) => {
+    const enemies = await appService.fetchEnemyData();
+    res.json({data: enemies});
+});
+
+router.post('/update-enemy', async (req, res) => {
+    const {npcId, enemySpecies, expDropped, goldDropped} = req.body;
+    const updateResult = await appService.updateEnemy(npcId, enemySpecies, expDropped, goldDropped);
+    if (updateResult) {
+        res.json({success : true});
+    } else {
+        res.status(500).json({success: false});
+    }
+});
 
 module.exports = router;

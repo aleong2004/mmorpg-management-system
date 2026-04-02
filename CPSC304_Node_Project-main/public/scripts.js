@@ -262,6 +262,58 @@ async function countDemotable() {
     }
 }
 
+//for displaying the enemies table, UPDATE query
+async function fetchAndDisplayEnemies() {
+    const tableElement = document.getElementById('enemyTable');
+    const tableBody = tableElement.querySelector('tbody');
+    const response = await fetch('/enemy-table',{method: 'GET'});
+    const responseData = await response.json();
+
+    if (tableBody) tableBody.innerHTML = '';
+
+    responseData.data.forEach(row => {
+        const tableRow = tableBody.insertRow();
+        row.forEach((field, index) => {
+            const cell = tableRow.insertCell(index);
+            cell.textContent = field;
+        });
+        tableRow.style.cursor = 'pointer';
+        tableRow.addEventListener('click', () => {
+            document.getElementById('updateNpcId').value = row[0];
+            document.getElementById('updateEnemySpecies').value = row[2];
+            document.getElementById('updateExpDropped').value = row[3];
+            document.getElementById('updateGoldDropped').value = row[4];
+
+        });
+    });
+    
+}
+
+async function updateEnemy(event) {
+    event.preventDefault();
+
+    const npcId = document.getElementById('updateNpcId').value;
+    const enemySpecies = document.getElementById('updateEnemySpecies').value;
+    const expDropped = document.getElementById('updateExpDropped').value;
+    const goldDropped = document.getElementById('updateGoldDropped').value;
+
+    const response = await fetch('/update-enemy', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({npcId, enemySpecies, expDropped, goldDropped})
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('updateEnemyResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "Enemy updated successfully!";
+        fetchAndDisplayEnemies();
+    } else {
+        messageElement.textContent = "Error updating enemy!";
+    }
+}
+
 
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
@@ -269,13 +321,16 @@ async function countDemotable() {
 window.onload = function() {
     checkDbConnection();
     fetchTableData();
+    fetchAndDisplayEnemies();
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("reloadDatabase").addEventListener("click", reloadDB);
     document.getElementById("deleteItem").addEventListener("submit", deleteItem);
     document.getElementById("agregationWithHaving").addEventListener("submit", agregationWithHaving);
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
-    document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
+    // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countDemotable").addEventListener("click", countDemotable);
+    document.getElementById("updateEnemyForm").addEventListener("submit", updateEnemy);
+
 };
 
 // General function to refresh the displayed table data. 
@@ -283,4 +338,5 @@ window.onload = function() {
 function fetchTableData() {
     fetchAndDisplayUsers();
     fetchAndDisplayPlayers();
+    fetchAndDisplayEnemies();
 }

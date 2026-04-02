@@ -175,6 +175,42 @@ async function countDemotable() {
         return -1;
     });
 }
+
+// fetching enemy data so user can update based on this
+async function fetchEnemyData() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT e.NPC_ID, n.Name, e.EnemySpecies, e.EXPDropped, e.GoldDropped
+            FROM Enemy e
+            JOIN NPC n
+            ON e.NPC_ID = n.NPC_ID`
+        );
+        return result.rows;
+
+    }).catch(() => {
+        return [];
+    });
+    
+}
+
+async function updateEnemy(npcId, enemySpecies, expDropped, goldDropped) {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `UPDATE Enemy
+            SET EnemySpecies = :enemySpecies,
+                EXPDropped = :expDropped,
+                GoldDropped = :goldDropped
+            WHERE NPC_ID = :npcId`,
+            { enemySpecies, expDropped, goldDropped, npcId },
+            { autoCommit: true}
+        );
+        return result.rowsAffected && result.rowsAffected > 0;
+
+    }).catch(() => {
+        return false;
+    });
+    
+}
 // STUFF
 
 // Insert query
@@ -213,7 +249,7 @@ async function agregationWithHaving(minPlayerCount) { // made smth - minPlayerCo
             FROM Clan c
             JOIN Player p ON c.ClanName = p.ClanName
             GROUP BY
-                c.ClanName,
+                c.ClanName,this
                 c.MinLevelToJoin,
                 c.ClanRank,
                 c.NumMembers
@@ -238,5 +274,7 @@ module.exports = {
     updateNameDemotable, 
     countDemotable,
     agregationWithHaving,
-    deleteItem
+    deleteItem,
+    fetchEnemyData,
+    updateEnemy
 };
