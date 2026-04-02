@@ -143,10 +143,10 @@ async function deleteItem(event) {
     const messageElement = document.getElementById('deleteItemResultMsg');
 
     if (responseData.success) {
-        messageElement.textContent = "Item deleted";
+        messageElement.textContent = "Item deleted.";
         fetchAndDisplayItems();
     } else {
-        messageElement.textContent = "Error while deleting the item";
+        messageElement.textContent = "Error: Cannot delete item.";
     }
 }
 
