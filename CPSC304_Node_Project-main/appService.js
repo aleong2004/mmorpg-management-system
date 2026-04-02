@@ -512,7 +512,7 @@ async function agregationWithHaving(minPlayerCount) { // made smth - minPlayerCo
                 c.MinLevelToJoin,
                 c.ClanRank,
                 c.NumMembers
-            HAVING COUNT(p.Username) > :minPlayerCount
+            HAVING COUNT(p.Username) >= :minPlayerCount
             `,
             { minPlayerCount: minPlayerCount }
         );

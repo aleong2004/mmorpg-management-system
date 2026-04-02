@@ -265,7 +265,7 @@ async function playerSelection(event) {
     const selectedPlayers = responseData.data;
 
     if (responseData.success) {
-        messageElement.textContent = `Returned ${selectedPlayers.length} players:`
+        messageElement.textContent = `Found ${selectedPlayers.length} players:`
     } else {
         messageElement.textContent = "Error requesting selected players..."
         return;
