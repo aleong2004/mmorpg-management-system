@@ -12,8 +12,6 @@
  * 
  */
 
-const { getStrongNPCs } = require("../appService");
-
 
 // This function checks the database connection and updates its status on the frontend.
 async function checkDbConnection() {
