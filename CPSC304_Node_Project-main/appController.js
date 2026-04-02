@@ -53,6 +53,30 @@ router.post("/delete-item", async (req, res) => {
     }
 });
 
+router.post("/quest-projection", async (req, res) => {
+    const { order } = req.body;
+    const projectionResult = await appService.questProjection(order);
+    if (projectionResult === -1 || projectionResult === -2) {
+        res.status(400).json({ success: false });
+    } else if (projectionResult !== false) {
+        res.json({ success: true, data: projectionResult });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.post("/select-players", async (req, res) => {
+    const { condList } = req.body;
+    const selectionResult = await appService.selectPlayers(condList);
+    if (selectionResult === -1 || selectionResult === -2) {
+        res.status(400).json({ success: false });
+    } else if (selectionResult !== false) {
+        res.json({ success: true, data: selectionResult });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
 router.post("/agregation-with-having", async (req, res) => {
     const { minPlayerCount } = req.body;
     const agregationResult = await appService.agregationWithHaving(minPlayerCount);

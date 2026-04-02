@@ -149,6 +149,241 @@ async function deleteItem(event) {
     }
 }
 
+// Projects the Quest table on the selected columns
+async function questProjection(event) {
+    event.preventDefault();
+    const messageElement = document.getElementById("ProjectionResultMsg");
+    const projectionTable = document.getElementById("projectionTable");
+    const tbody = projectionTable.querySelector("tbody");
+    const trows = tbody.querySelectorAll("tr");
+
+    let ordering = [];
+    for (const tr of trows) {
+        ordering.push(tr.id);
+    }
+    if (ordering.length === 0) {
+        messageElement.textContent = "Error: At least one attribute needs to be included.";
+    }
+
+    const response = await fetch(`/quest-projection`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            order: ordering
+        })
+    });
+
+    const responseData = await response.json();
+    const questContent = responseData.data;
+
+    if (responseData.success) {
+        messageElement.textContent = "Requested data:";
+    } else {
+        messageElement.textContent = "Error requesting quest data..."
+        return;
+    }
+
+    const tableElement = document.getElementById('questTable');
+    const tableHead = tableElement.querySelector('thead');
+    const tableBody = tableElement.querySelector('tbody');
+    if (tableHead) {
+        tableHead.innerHTML = '';
+    }
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    
+    const header = tableHead.insertRow();
+    ordering.forEach(order => {
+        const headerCell = header.insertCell();
+        headerCell.textContent = order;
+    });
+
+    questContent.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+}
+
+async function addAttrToProjection(event) {
+    const button = event.target;
+    const tableElement = document.getElementById("projectionTable");
+    const tableBody = tableElement.querySelector('tbody');
+    const row = tableBody.insertRow();
+    const cell1 = row.insertCell();
+    const cell2 = row.insertCell();
+
+    row.id = button.id.split("projection")[1];
+    cell1.textContent = button.id.split("projection")[1];
+    const delAttrButton = document.createElement("button");
+    delAttrButton.textContent = "Remove";
+    delAttrButton.addEventListener("click", function() {
+        row.remove();
+    });
+    cell2.appendChild(delAttrButton);
+}
+
+async function playerSelection(event) {
+    event.preventDefault();
+    const messageElement = document.getElementById("SelectionResultMsg");
+    const selectionTable = document.getElementById("SelectionTable");
+    const tbody = selectionTable.querySelector("tbody");
+    const trows = tbody.querySelectorAll("tr");
+
+    let conds = []
+    for (const tr of trows) {
+        let cond = [];
+        tds = tr.querySelectorAll("td");
+        if (tds.length !== 5) {
+            messageElement.textContent = "Error in player selection script";
+            console.log("script.js is not parsing the selection table properly");
+            return;
+        }
+        for (let i = 0; i < 4; i++) {
+            cond.push(tds[i].textContent);
+        }
+        conds.push(cond);
+    }
+
+    const response = await fetch(`/select-players`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            condList: conds
+        })
+    });
+
+    const responseData = await response.json();
+    const selectedPlayers = responseData.data;
+
+    if (responseData.success) {
+        messageElement.textContent = `Returned ${selectedPlayers.length} players:`
+    } else {
+        messageElement.textContent = "Error requesting selected players..."
+        return;
+    }
+
+    const tableElement = document.getElementById('selectedPlayerTable');
+    const tableHead = tableElement.querySelector('thead');
+    const tableBody = tableElement.querySelector('tbody');
+    if (tableHead) {
+        tableHead.innerHTML = '';
+    }
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    const header = tableHead.insertRow();
+    const columns = [
+        "Username", "Player Level", "Base Stats", "Currency", "Mana",
+        "Last Seen Online", "Profession ID", "Profession Name","Class ID",
+        "Class Name", "Clan Name", "Location ID", "Location Name"
+    ];
+    columns.forEach(column => {
+        const headerCell = header.insertCell();
+        headerCell.textContent = column;
+    });
+
+    selectedPlayers.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+}
+
+async function addNumericalCondToSelection(event) {
+    event.preventDefault();
+    const logic = document.getElementById("selectNumericalCond").value;
+    const attr = document.getElementById("selectNumericalAttr").value;
+    const cond = document.getElementById("selectNumericalIneq").value;
+    const input = document.getElementById("searchNumericalInput").value;
+
+    const tableElement = document.getElementById("SelectionTable");
+    const tableBody = tableElement.querySelector('tbody');
+    const row = tableBody.insertRow();
+    const cell1 = row.insertCell();
+    const cell2 = row.insertCell();
+    const cell3 = row.insertCell();
+    const cell4 = row.insertCell();
+    const cell5 = row.insertCell();
+
+    cell1.textContent = logic;
+    cell2.textContent = attr;
+    cell3.textContent = cond;
+    cell4.textContent = input;
+    const removeCondButton = document.createElement("button");
+    removeCondButton.addEventListener("click", function() {
+        row.remove();
+    });
+    removeCondButton.textContent = "Remove Condition";
+    cell5.append(removeCondButton);
+}
+
+async function addTextCondToSelection(event) {
+    event.preventDefault();
+    const logic = document.getElementById("selectTextCond").value;
+    const attr = document.getElementById("selectTextAttr").value;
+    const cond = document.getElementById("selectTextIneq").value;
+    const input = document.getElementById("searchTextInput").value;
+
+    const tableElement = document.getElementById("SelectionTable");
+    const tableBody = tableElement.querySelector('tbody');
+    const row = tableBody.insertRow();
+    const cell1 = row.insertCell();
+    const cell2 = row.insertCell();
+    const cell3 = row.insertCell();
+    const cell4 = row.insertCell();
+    const cell5 = row.insertCell();
+
+    cell1.textContent = logic;
+    cell2.textContent = attr;
+    cell3.textContent = cond;
+    cell4.textContent = input;
+    const removeCondButton = document.createElement("button");
+    removeCondButton.addEventListener("click", function() {
+        row.remove();
+    });
+    removeCondButton.textContent = "Remove Condition";
+    cell5.append(removeCondButton);
+}
+
+async function addTimeCondToSelection(event) {
+    event.preventDefault();
+    const logic = document.getElementById("selectTimeCond").value;
+    const attr = document.getElementById("selectTimeAttr").value;
+    const cond = document.getElementById("selectTimeIneq").value;
+    const input = document.getElementById("searchTimeInput").value;
+
+    const tableElement = document.getElementById("SelectionTable");
+    const tableBody = tableElement.querySelector('tbody');
+    const row = tableBody.insertRow();
+    const cell1 = row.insertCell();
+    const cell2 = row.insertCell();
+    const cell3 = row.insertCell();
+    const cell4 = row.insertCell();
+    const cell5 = row.insertCell();
+
+    cell1.textContent = logic;
+    cell2.textContent = attr;
+    cell3.textContent = cond;
+    cell4.textContent = input;
+    const removeCondButton = document.createElement("button");
+    removeCondButton.addEventListener("click", function() {
+        row.remove();
+    });
+    removeCondButton.textContent = "Remove Condition";
+    cell5.append(removeCondButton);
+}
+
 // 
 async function agregationWithHaving(event) {
     event.preventDefault();
@@ -424,6 +659,17 @@ window.onload = function() {
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("reloadDatabase").addEventListener("click", reloadDB);
     document.getElementById("deleteItem").addEventListener("submit", deleteItem);
+    document.getElementById("questProjection").addEventListener("submit", questProjection);
+    document.getElementById("projectionQuestID").addEventListener("click", addAttrToProjection);
+    document.getElementById("projectionName").addEventListener("click", addAttrToProjection);
+    document.getElementById("projectionMinLevel").addEventListener("click", addAttrToProjection);
+    document.getElementById("projectionEXP_Reward").addEventListener("click", addAttrToProjection);
+    document.getElementById("projectionCurrencyReward").addEventListener("click", addAttrToProjection);
+    document.getElementById("projectionEventID").addEventListener("click", addAttrToProjection);
+    document.getElementById("playerSelection").addEventListener("submit", playerSelection);
+    document.getElementById("searchNumerical").addEventListener("submit", addNumericalCondToSelection);
+    document.getElementById("searchText").addEventListener("submit", addTextCondToSelection);
+    document.getElementById("searchTime").addEventListener("submit", addTimeCondToSelection);
     document.getElementById("agregationWithHaving").addEventListener("submit", agregationWithHaving);
     document.getElementById("insertEnemy").addEventListener("submit", insertEnemy);
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);

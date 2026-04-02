@@ -92,6 +92,145 @@
     </form>
     <div id="deleteItemResultMsg"></div>
 
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h2>View Quest Data</h2>
+    <p>
+        Add attributes to return. Attribute will be shown from left to right based on the order they were added.<br>
+    </p>
+    <ul>
+        <li>Quest ID: <button type="click" id="projectionQuestID"> Add Attribute</button> </li>
+        <li>Name: <button type="click" id="projectionName"> Add Attribute</button> </li>
+        <li>Minimum Level: <button type="click" id="projectionMinLevel"> Add Attribute</button> </li>
+        <li>EXP Reward: <button type="click" id="projectionEXP_Reward"> Add Attribute</button> </li>
+        <li>Currency Reward: <button type="click" id="projectionCurrencyReward"> Add Attribute</button> </li>
+        <li>Event ID: <button type="click" id="projectionEventID"> Add Attribute</button> </li>
+    </ul>
+    <br>
+    Added attributes:
+    <table id="projectionTable" border="1">
+        <tbody>
+        </tbody>
+    </table>
+    <form id="questProjection">
+        <button type="submit">View Data</button> <br>
+    </form>
+    <br><br>
+    <div id="ProjectionResultMsg"></div>
+    <table id="questTable" border="1">
+        <thead>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h2>Player Search</h2>
+    <p>
+        Search for players that meet certain conditions. Conditions are evaluated in the order they were added.<br>
+        AND/OR will be ignored for the first condition.
+    </p>
+    <form id="searchNumerical">
+        <div>
+            Numerical Attributes:<br>
+            <select id="selectNumericalCond" name="selectNumericalCond">
+                <option value="AND">AND</option>
+                <option value="OR">OR</option>
+            </select>
+            <select id="selectNumericalAttr" name="selectNumericalAttr">
+                <option value="Player Level">Level</option>
+                <option value="Currency">Currency</option>
+                <option value="Mana">Mana</option>
+                <option value="Profession ID">Profession ID</option>
+                <option value="Class ID">Class ID</option>
+                <option value="Location ID">Location ID</option>
+            </select>
+            <select id="selectNumericalIneq" name="selectNumericalIneq">
+                <option value="is equal to">is equal to</option>
+                <option value="is not equal to">is not equal to</option>
+                <option value="is greater than">is greater than</option>
+                <option value="is greater than or equal to">is greater than or equal to</option>
+                <option value="is less than">is less than</option>
+                <option value="is less than or equal to">is less than or equal to</option>
+            </select>
+            <input type="number" id="searchNumericalInput" placeholder="Enter a number" required></input>
+            <button type="submit">Add condition</button> <br>
+        </div>
+    </form>
+    <br>
+    <form id="searchText">
+        <div>
+            Text Attributes:<br>
+            <select id="selectTextCond" name="selectTextCond">
+                <option value="AND">AND</option>
+                <option value="OR">OR</option>
+            </select>
+            <select id="selectTextAttr" name="selectTextAttr">
+                <option value="Username">Username</option>
+                <option value="Profession Name">Profession Name</option>
+                <option value="Class Name">Class Name</option>
+                <option value="Clan Name">Clan Name</option>
+                <option value="Location Name">Location Name</option>
+                <option value="Base Stats">Base Stats</option>
+            </select>
+            <select id="selectTextIneq" name="selectTextIneq">
+                <option value="contains">contains</option>
+            </select>
+            <input type="text" id="searchTextInput" placeholder="Type here" required></input>
+            <button type="submit">Add condition</button> <br>
+        </div>
+    </form>
+    <br>
+    <form id="searchTime">
+        <div>
+            Time Attributes:<br>
+            <select id="selectTimeCond" name="selectTimeCond">
+                <option value="AND">AND</option>
+                <option value="OR">OR</option>
+            </select>
+            <select id="selectTimeAttr" name="selectTimeAttr">
+                <option value="Last Seen Online">Last Seen Online</option>
+            </select>
+            <select id="selectTimeIneq" name="selectTimeIneq">
+                <option value="is equal to">is equal to</option>
+                <option value="is not equal to">is not equal to</option>
+                <option value="is greater than">is greater than</option>
+                <option value="is greater than or equal to">is greater than or equal to</option>
+                <option value="is less than">is less than</option>
+                <option value="is less than or equal to">is less than or equal to</option>
+            </select>
+            <input type="datetime-local" id="searchTimeInput" min="2000-01-01T00:00" max="9999-12-31T23:59" placeholder="Enter a Time" required></input>
+            <button type="submit">Add condition</button> <br>
+        </div>
+    </form>
+    <br>
+    Added conditions:
+    <table id="SelectionTable" border="1">
+        <thead>
+            <tr>
+                <th>Condition</th>
+                <th>Attribute</th>
+                <th>Inequality</th>
+                <th>Value</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <form id="playerSelection">
+        <button type="submit">Find Players</button> <br>
+    </form>
+    <br><br>
+    <div id="SelectionResultMsg"></div>
+    <table id="selectedPlayerTable" border="1">
+        <thead>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
 <br><hr><br> <!-- ========================================================================= -->
 
     <h2>Aggregation</h2>
