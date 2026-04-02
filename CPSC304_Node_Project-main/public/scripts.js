@@ -740,7 +740,7 @@ window.onload = function() {
     fetchTableData();
     fetchAndDisplayEnemies();
     fetchAndDisplayItems();
-    document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
+    //document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("reloadDatabase").addEventListener("click", reloadDB);
     document.getElementById("deleteItem").addEventListener("submit", deleteItem);
     document.getElementById("questProjection").addEventListener("submit", questProjection);
