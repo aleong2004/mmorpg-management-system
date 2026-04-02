@@ -364,15 +364,15 @@ async function selectPlayers(condList) {
 
         const parsedList = parseCondList(condList);
         console.log(parsedList);
-        for (const cond in parsedList) {
-            if (!conds.includes(cond[0]) || !columns.includes(cond[1]) || !inequalities.includes(cond[2])) {
-                console.log(cond);
-                console.log(!conds.includes(cond[0]));
-                console.log(!columns.includes(cond[1]));
-                console.log(inequalities.includes(cond[2]));
-                return -2;
-            }
-        }
+        //for (const cond in parsedList) {
+        //    if (!conds.includes(cond[0]) || !columns.includes(cond[1]) || !inequalities.includes(cond[2])) {
+        //        console.log(cond);
+        //        console.log(!conds.includes(cond[0]));
+        //        console.log(!columns.includes(cond[1]));
+        //        console.log(inequalities.includes(cond[2]));
+        //        return -2;
+        //    }
+        //}
 
         let where_clause = ``;
         let binds = {};
