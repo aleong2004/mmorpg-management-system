@@ -68,7 +68,7 @@ router.post("/quest-projection", async (req, res) => {
 router.post("/select-players", async (req, res) => {
     const { condList } = req.body;
     const selectionResult = await appService.selectPlayers(condList);
-    if (selectionResult === -1 || projectionResult === -2) {
+    if (selectionResult === -1 || selectionResult === -2) {
         res.status(400).json({ success: false });
     } else if (selectionResult !== false) {
         res.json({ success: true, data: selectionResult });
