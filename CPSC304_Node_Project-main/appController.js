@@ -54,8 +54,7 @@ router.post("/delete-item", async (req, res) => {
 });
 
 router.post("/quest-projection", async (req, res) => {
-    const params = new URLSearchParams(window.location.search);
-    const ordering = params.get(order).split(",");
+    const { ordering } = req.body;
     const projectionResult = await appService.questProjection(ordering);
     if (projectionResult === -1 || projectionResult === -2) {
         res.status(400).json({ success: false });

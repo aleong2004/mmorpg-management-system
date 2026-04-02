@@ -190,12 +190,14 @@ async function questProjection(event) {
         }
     }
 
-    const params = new URLSearchParams({
-        "order": ordering
-    });
-
-    const response = await fetch(`/quest-projection?${params}`, {
-        method: 'GET'
+    const response = await fetch(`/quest-projection`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            order: ordering
+        })
     });
 
     const responseData = await response.json();
@@ -223,7 +225,7 @@ async function questProjection(event) {
         const headerCell = header.insertCell();
         headerCell.textContent = order;
     });
-    
+
     questContent.forEach(user => {
         const row = tableBody.insertRow();
         user.forEach((field, index) => {
