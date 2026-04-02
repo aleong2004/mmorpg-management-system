@@ -383,13 +383,13 @@ async function selectPlayers(condList) {
                 if (i === 0) {
                     where_clause = `${where_clause}(${curr_cond[1]} ${curr_cond[2]} :${key})`;
                 } else {
-                    where_clause = `${where_clause} (${curr_cond[0]} ${curr_cond[1]} ${curr_cond[2]} :${key})`;
+                    where_clause = `${where_clause} ${curr_cond[0]} (${curr_cond[1]} ${curr_cond[2]} :${key})`;
                 }
             } else {
                 if (i === 0) {
                     where_clause = `${where_clause}(LOWER(${curr_cond[1]}) ${curr_cond[2]} :${key})`;
                 } else {
-                    where_clause = `${where_clause} (${curr_cond[0]} LOWER(${curr_cond[1]}) ${curr_cond[2]} :${key})`;
+                    where_clause = `${where_clause} ${curr_cond[0]} (LOWER(${curr_cond[1]}) ${curr_cond[2]} :${key})`;
                 }
             }
             
