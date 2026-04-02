@@ -350,11 +350,11 @@ async function selectPlayers(condList) {
         ];
         const inequalities = ["=", "!=", ">", ">=", "<", "<=", "LIKE"];
         const from_clause = "Player p, PlayerLevel pl, Location loc, Profession prof, Class c";
-        const join_clause = `p.ProfessionID = prof.ProfessionID AND 
-                             p.ClassID = c.ClassID AND
-                             p.LocationID = loc.LocationID AND 
-                             p.PlayerLevel = pl.PlayerLevel AND
-                             p.ClassID = pl.ClassID`;
+        const join_clause = `(p.ProfessionID = prof.ProfessionID) AND 
+                             (p.ClassID = c.ClassID) AND
+                             (p.LocationID = loc.LocationID) AND 
+                             (p.PlayerLevel = pl.PlayerLevel) AND
+                             (p.ClassID = pl.ClassID)`;
         if (condList.length === 0) {
             const result = await connection.execute(
                 `SELECT ${columns.join(", ")} FROM ${from_clause} WHERE ${join_clause}`
@@ -381,15 +381,15 @@ async function selectPlayers(condList) {
             const key = `var${i}`;
             if (curr_cond[2] !== "LIKE") {
                 if (i === 0) {
-                    where_clause = `${where_clause}${curr_cond[1]} ${curr_cond[2]} :${key}`;
+                    where_clause = `${where_clause}(${curr_cond[1]} ${curr_cond[2]} :${key})`;
                 } else {
-                    where_clause = `${where_clause} ${curr_cond[0]} ${curr_cond[1]} ${curr_cond[2]} :${key}`;
+                    where_clause = `${where_clause} (${curr_cond[0]} ${curr_cond[1]} ${curr_cond[2]} :${key})`;
                 }
             } else {
                 if (i === 0) {
-                    where_clause = `${where_clause}LOWER(${curr_cond[1]}) ${curr_cond[2]} :${key}`;
+                    where_clause = `${where_clause}(LOWER(${curr_cond[1]}) ${curr_cond[2]} :${key})`;
                 } else {
-                    where_clause = `${where_clause} ${curr_cond[0]} LOWER(${curr_cond[1]}) ${curr_cond[2]} :${key}`;
+                    where_clause = `${where_clause} (${curr_cond[0]} LOWER(${curr_cond[1]}) ${curr_cond[2]} :${key})`;
                 }
             }
             
@@ -399,7 +399,7 @@ async function selectPlayers(condList) {
         const result = await connection.execute(
             `SELECT ${columns.join(", ")} 
              FROM ${from_clause} 
-             WHERE ${where_clause} AND ${join_clause}`,
+             WHERE (${where_clause}) AND ${join_clause}`,
              binds
         );
         console.log(result.rows);
