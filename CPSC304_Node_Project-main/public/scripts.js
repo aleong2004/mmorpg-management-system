@@ -773,4 +773,5 @@ function fetchTableData() {
     //fetchAndDisplayUsers();
     fetchAndDisplayPlayers();
     fetchAndDisplayEnemies();
+    fetchAndDisplayItems();
 }
