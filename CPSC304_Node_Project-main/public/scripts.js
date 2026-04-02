@@ -650,6 +650,7 @@ async function friendsWithAllClanMembers() {
 
 async function fetchAndDisplayPlayerCounts() {
     const tableElement = document.getElementById("playerCountsTable");
+    const messageElement = document.getElementById("playerCountsResultMsg");
     const tableBody = tableElement.querySelector("tbody");
     const response = await fetch("/player-count-by-location", {
         method: "GET"
@@ -658,6 +659,12 @@ async function fetchAndDisplayPlayerCounts() {
     const playerContent = responseData.data;
     if (tableBody) {
         tableBody.innerHTML = '';
+    }
+    if (responseData.success) {
+        messageElement.textContent = "Results returned successfully";
+    } else {
+        messageElement.textContent = "Error returning results...";
+        return;
     }
     playerContent.forEach(user => {
         const row = tableBody.insertRow();
