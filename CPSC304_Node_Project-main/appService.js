@@ -391,7 +391,7 @@ async function selectPlayers(condList) {
             } else {
                 where_clause = `${where_clause} (${curr_cond[1]} ${curr_cond[2]} :${key})`;
             }
-            
+
             binds[key] = curr_cond[3];
         }
         console.log(`(${where_clause}) AND ${join_clause}`);
@@ -459,7 +459,7 @@ function parseCondList(condList) {
             cond[3] = `%${cond[3].toLowerCase()}%`;
         }
 
-        if (cond[1] === "LIKE") {
+        if (cond[1] === "p.LastSeenOnline") {
             cond[3] = `%${cond[3].replace("T", " ")}%`;
         }
     }
