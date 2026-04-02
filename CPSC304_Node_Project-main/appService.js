@@ -105,6 +105,19 @@ async function fetchPlayerData() {
     });
 }
 
+// fetching item data so user can update based on this
+async function fetchItemData() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT ItemID, Name, ItemType, BaseCost 
+            FROM Item`
+        );
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
+
 async function initiateDemotable() {
     return await withOracleDB(async (connection) => {
         try {
@@ -551,6 +564,7 @@ module.exports = {
     insertEnemy,
     fetchEnemyData,
     updateEnemy,
+    fetchItemData,
     getPlayerAbilities,
     getPlayersfriendsWithAllClanMembers,
     playerCountByLocation,

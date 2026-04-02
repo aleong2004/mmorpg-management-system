@@ -144,6 +144,7 @@ async function deleteItem(event) {
 
     if (responseData.success) {
         messageElement.textContent = "Item deleted";
+        fetchAndDisplayItems();
     } else {
         messageElement.textContent = "Error while deleting the item";
     }
@@ -565,6 +566,28 @@ async function fetchAndDisplayEnemies() {
     
 }
 
+//for displaying the item table, delete query
+async function fetchAndDisplayItems() {
+    const tableElement = document.getElementById('itemTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/item-table',{method: 'GET'});
+    const responseData = await response.json();
+
+    if (tableBody) tableBody.innerHTML = '';
+
+
+    responseData.data.forEach(row => {
+        
+        const tableRow = tableBody.insertRow();
+        row.forEach((field, index) => {
+            const cell = tableRow.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+    
+}
+
 async function updateEnemy(event) {
     event.preventDefault();
 
@@ -709,6 +732,7 @@ window.onload = function() {
     checkDbConnection();
     fetchTableData();
     fetchAndDisplayEnemies();
+    fetchAndDisplayItems();
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("reloadDatabase").addEventListener("click", reloadDB);
     document.getElementById("deleteItem").addEventListener("submit", deleteItem);
