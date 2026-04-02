@@ -102,15 +102,19 @@
     </p>
     <form id="questProjection">
         <ul>
-            <li>Quest ID: <input type="number" id="projectionQuestID"></input></li>
-            <li>Name: <input type="number" id="projectionName"></input></li>
-            <li>Minimum Level: <input type="number" id="projectionMinLevel"></input></li>
-            <li>EXP Reward: <input type="number" id="projectionEXP"></input></li>
-            <li>Currency Reward: <input type="number" id="projectionCurrency"></input></li>
-            <li>Event ID: <input type="number" id="projectionEventID"></input></li>
+            <li>Quest ID: <button type="click" id="projectionQuestID"> Add Attribute</button> </li>
+        <li>Name: <button type="click" id="projectionName"> Add Attribute</button> </li>
+        <li>Minimum Level: <button type="click" id="projectionMinLevel"> Add Attribute</button> </li>
+        <li>EXP Reward: <button type="click" id="projectionEXP_Reward"> Add Attribute</button> </li>
+        <li>Currency Reward: <button type="click" id="projectionCurrencyReward"> Add Attribute</button> </li>
+        <li>Event ID: <button type="click" id="projectionEventID"> Add Attribute</button> </li>
         </ul>
-        <button type="submit"> View </button> <br>
+        <button type="submit"> View Data</button> <br>
     </form>
+    <table id="projectionTable" border="1">
+        <tbody>
+        </tbody>
+    </table>
     <div id="ProjectionResultMsg"></div>
     <table id="questTable" border="1">
         <thead>

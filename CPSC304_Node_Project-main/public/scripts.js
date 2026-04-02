@@ -153,7 +153,18 @@ async function deleteItem(event) {
 async function questProjection(event) {
     event.preventDefault();
 
-    const messageElement = document.getElementById('ProjectionResultMsg');
+    const messageElement = document.getElementById("ProjectionResultMsg");
+    const projectionTable = document.getElementById("projectionTable");
+    const tbody = projectionTable.querySelector("tbody");
+    const trows = tbody.querySelectorAll("tr");
+
+    let ordering = [];
+    for (const tr of trows) {
+        ordering.push(tr.id);
+    }
+    console.log(ordering);
+    return;
+    
     const questidOrder = document.getElementById("projectionQuestID").valueAsNumber;
     const nameOrder = document.getElementById("projectionName").valueAsNumber;
     const minLevelOrder = document.getElementById("projectionMinLevel").valueAsNumber;
@@ -162,7 +173,7 @@ async function questProjection(event) {
     const eventidOrder = document.getElementById("projectionEventID").valueAsNumber;
 
     // remove attributes with no ordering, ensure at least one attribute has an ordering, and ensure there are no duplicates
-    let ordering = [questidOrder, nameOrder, minLevelOrder, expOrder, currencyOrder, eventidOrder];
+    //let ordering = [questidOrder, nameOrder, minLevelOrder, expOrder, currencyOrder, eventidOrder];
     ordering = ordering.filter(order => !isNaN(order));
     if (ordering.length === 0) {
         messageElement.textContent = "Error: At least one field must be filled.";
@@ -204,7 +215,7 @@ async function questProjection(event) {
     const questContent = responseData.data;
 
     if (responseData.success) {
-        messageElement.textContent = "Requested data:";
+        messageElement.textContent = "Requested attributes:";
     } else {
         messageElement.textContent = "Error requesting quest data..."
         return;
@@ -233,6 +244,22 @@ async function questProjection(event) {
             cell.textContent = field;
         });
     });
+}
+
+async function addAttrToProjection(button) {
+    const tableElement = document.getElementById("projectionTable");
+    const tableBody = tableElement.querySelector('tbody');
+    const row = tableBody.insertRow();
+    row.id = button.id.split("projection")[1];
+    const cell1 = row.insertCell();
+    cell1.textContent = button.id.split("projection")[1];
+    const cell2 = row.insertCell();
+    const delAttrButton = document.createElement("button");
+    delAttrButton.textContent = "Remove";
+    delAttrButton.addEventListener("click", function() {
+        row.remove();
+    });
+    cell2.appendChild(delAttrButton);
 }
 
 // 
@@ -511,6 +538,12 @@ window.onload = function() {
     document.getElementById("reloadDatabase").addEventListener("click", reloadDB);
     document.getElementById("deleteItem").addEventListener("submit", deleteItem);
     document.getElementById("questProjection").addEventListener("submit", questProjection);
+    document.getElementById("projectionQuestID").addEventListener("click", addAttrToProjection);
+    document.getElementById("projectionName").addEventListener("click", addAttrToProjection);
+    document.getElementById("projectionMinLevel").addEventListener("click", addAttrToProjection);
+    document.getElementById("projectionEXP_Reward").addEventListener("click", addAttrToProjection);
+    document.getElementById("projectionCurrencyReward").addEventListener("click", addAttrToProjection);
+    document.getElementById("projectionEventID").addEventListener("click", addAttrToProjection);
     document.getElementById("agregationWithHaving").addEventListener("submit", agregationWithHaving);
     document.getElementById("insertEnemy").addEventListener("submit", insertEnemy);
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
