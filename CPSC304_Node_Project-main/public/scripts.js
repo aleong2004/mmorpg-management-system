@@ -221,6 +221,7 @@ async function insertEnemy(event) {
 
    if (responseData.success) {
         messageElement.textContent = "Data inserted successfully!";
+        fetchAndDisplayEnemies();
     } else {
         messageElement.textContent = "Error inserting data!";
     }

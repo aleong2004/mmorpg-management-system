@@ -246,10 +246,12 @@ async function insertEnemy(npcId, enemySpecies, expDropped, goldDropped, name, n
     return await withOracleDB(async (connection) => {
 
         //reject if no loc
-        if (await connection.execute(`SELECT * FROM Location WHERE LocationID = :locationId`,[locationId]).rows.length === 0) { return false; }
+        const locationCheck = await connection.execute(`SELECT * FROM Location WHERE LocationID = :locationId`, [locationId]);
+        if (locationCheck.rows.length === 0) { return false; }
 
         //create NPC if pcId doesn't match
-        if (await connection.execute(`SELECT * FROM NPC WHERE NPC_ID = :npcId`,[npcId]).length === 0) {
+        const npcCheck = await connection.execute(`SELECT * FROM NPC WHERE NPC_ID = :npcId`, [npcId]);
+        if (npcCheck.rows.length === 0) {
             await connection.execute(
                 `INSERT INTO NPC (NPC_ID, Name, NPC_Level, BaseStats, LocationID)
                  VALUES (:npcId, :name, :npcLevel, :baseStats, :locationId)`,
@@ -276,7 +278,7 @@ async function insertEnemy(npcId, enemySpecies, expDropped, goldDropped, name, n
 async function deleteItem(itemId) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
-            `DELETE FROM Item WHERE ItemID =: itemId`,
+            `DELETE FROM Item WHERE ItemID = : itemId`,
             [itemId],
             { autoCommit: true }
         );
@@ -331,6 +333,7 @@ module.exports = {
     countDemotable,
     agregationWithHaving,
     deleteItem,
+    insertEnemy,
     fetchEnemyData,
     updateEnemy,
     getPlayerAbilities
