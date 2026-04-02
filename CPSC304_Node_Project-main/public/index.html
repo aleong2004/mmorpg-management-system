@@ -96,9 +96,8 @@
 
     <h2>View Quest Data</h2>
     <p>
-        Enter the order of attributes to return. Attributes will be shown from left to right in ascending order.
+        Add attributes to return. Attribute will be shown from left to right based on the order they were added.
         <br>
-        Attributes that are left blank will not be shown.
     </p>
     <ul>
         <li>Quest ID: <button type="click" id="projectionQuestID"> Add Attribute</button> </li>
@@ -108,6 +107,8 @@
         <li>Currency Reward: <button type="click" id="projectionCurrencyReward"> Add Attribute</button> </li>
         <li>Event ID: <button type="click" id="projectionEventID"> Add Attribute</button> </li>
     </ul>
+    <br>
+    Added attributes:
     <table id="projectionTable" border="1">
         <tbody>
         </tbody>
@@ -115,6 +116,7 @@
     <form id="questProjection">
         <button type="submit"> View Data</button> <br>
     </form>
+    <br><br>
     <div id="ProjectionResultMsg"></div>
     <table id="questTable" border="1">
         <thead>
