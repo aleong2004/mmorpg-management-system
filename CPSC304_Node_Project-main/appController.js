@@ -59,7 +59,7 @@ router.post("/quest-projection", async (req, res) => {
     if (projectionResult === -1 || projectionResult === -2) {
         res.status(400).json({ success: false });
     } else if (projectionResult !== false) {
-        res.json({ success: true });
+        res.json({ success: true, data: projectionResult });
     } else {
         res.status(500).json({ success: false });
     }
