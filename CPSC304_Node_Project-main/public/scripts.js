@@ -740,7 +740,7 @@ window.onload = function() {
     fetchTableData();
     fetchAndDisplayEnemies();
     fetchAndDisplayItems();
-    //document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
+    // document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("reloadDatabase").addEventListener("click", reloadDB);
     document.getElementById("deleteItem").addEventListener("submit", deleteItem);
     document.getElementById("questProjection").addEventListener("submit", questProjection);
@@ -756,7 +756,7 @@ window.onload = function() {
     document.getElementById("searchTime").addEventListener("submit", addTimeCondToSelection);
     document.getElementById("agregationWithHaving").addEventListener("submit", agregationWithHaving);
     document.getElementById("insertEnemy").addEventListener("submit", insertEnemy);
-    document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
+    // document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
     // document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     // document.getElementById("countDemotable").addEventListener("click", countDemotable);
     document.getElementById("updateEnemyForm").addEventListener("submit", updateEnemy);
