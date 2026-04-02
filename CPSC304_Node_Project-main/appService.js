@@ -382,7 +382,7 @@ async function selectPlayers(condList) {
             }
 
             if (curr_cond[1] === "p.LastSeenOnline") {
-                where_clause = `${where_clause} (TO_TIMESTAMP(${curr_cond[1]}, 'YYYY-MM-DD HH24:MI:SS') ${curr_cond[2]} :${key})`;
+                where_clause = `${where_clause} (${curr_cond[1]} ${curr_cond[2]} TO_TIMESTAMP(:${key}), 'YYYY-MM-DD HH24:MI:SS')`;
             } else if (curr_cond[2] === "LIKE") {
                 if (curr_cond[1] === "p.LastSeenOnline") { // should never happen
                     return -1;
