@@ -514,6 +514,27 @@ async function playerCountByLocation() {
     })
 }
 
+// Nested aggregation with group by query. Finds the average NPC level at
+// each location, then keeps the NPCs that are higher level than the average 
+// at every location. Essentially finds the strongest NPCs/enemies. 
+async function getStrongNPCs() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT npc.NPC_ID, npc.Name, npc.NPC_Level, 
+                    npc.BaseStats, loc.LocationID, loc.Name
+             FROM Location loc, NPC npc
+             WHERE loc.LocationID = npc.LocationID AND npc.NPC_Level > ALL (
+                SELECT AVG(npc2.NPC_Level)
+                FROM NPC npc2
+                GROUP BY npc2.LocationID)
+            ORDER BY npc.NPC_Level DESC`
+        );
+        return result.rows;
+    }).catch(() => {
+        return [];
+    })
+}
+
 module.exports = {
     testOracleConnection,
     fetchDemotableFromDb,
@@ -532,5 +553,6 @@ module.exports = {
     updateEnemy,
     getPlayerAbilities,
     getPlayersfriendsWithAllClanMembers,
-    playerCountByLocation
+    playerCountByLocation,
+    getStrongNPCs
 };

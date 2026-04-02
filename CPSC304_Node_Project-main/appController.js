@@ -172,4 +172,9 @@ router.get('/player-count-by-location', async (req, res) => {
     res.json({success: true, data: counts});
 });
 
+router.get('/get-strong-npcs', async (req, res) => {
+    const result = await appService.getStrongNPCs();
+    res.json({success: true, data: result});
+});
+
 module.exports = router;

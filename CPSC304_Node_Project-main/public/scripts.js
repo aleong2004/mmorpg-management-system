@@ -12,6 +12,8 @@
  * 
  */
 
+const { getStrongNPCs } = require("../appService");
+
 
 // This function checks the database connection and updates its status on the frontend.
 async function checkDbConnection() {
@@ -675,6 +677,33 @@ async function fetchAndDisplayPlayerCounts() {
     });
 }
 
+async function fetchAndDisplayStrongNPCs() {
+    const tableElement = document.getElementById("strongNPCsTable");
+    const messageElement = document.getElementById("strongNPCsResultMsg");
+    const tableBody = tableElement.querySelector("tbody");
+    const response = await fetch("/get-strong-npcs", {
+        method: "GET"
+    });
+    const responseData = await response.json();
+    const playerContent = responseData.data;
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    if (responseData.success) {
+        messageElement.textContent = "Results returned successfully";
+    } else {
+        messageElement.textContent = "Error returning results...";
+        return;
+    }
+    playerContent.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+}
+
 // ---------------------------------------------------------------
 // Initializes the webpage functionalities.
 // Add or remove event listeners based on the desired functionalities.
@@ -705,6 +734,7 @@ window.onload = function() {
     document.getElementById("playerAbilitiesForm").addEventListener("submit", getPlayerAbilities);
     document.getElementById("divisionQuery").addEventListener("click", friendsWithAllClanMembers);
     document.getElementById("playerCountsByLocation").addEventListener("click", fetchAndDisplayPlayerCounts);
+    document.getElementById("strongNPCs").addEventListener("click", fetchAndDisplayStrongNPCs);
     
 };
 
