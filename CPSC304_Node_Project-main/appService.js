@@ -326,12 +326,10 @@ async function questProjection(ordering) {
                 return -2;
             }
         }
-        console.log("test");
         const result = await connection.execute(
             `SELECT ${ordering.join(", ")} FROM Quest`
         );
-        console.log("test2");
-
+        console.log(result.rows);
         return result.rows;
     }).catch(() => {
         return false;
