@@ -53,6 +53,16 @@ router.post("/delete-item", async (req, res) => {
     }
 });
 
+router.post("/quest-projection", async (req, res) => {
+    //const { itemId } = req.body;
+    //const deleteResult = await appService.deleteItem(itemId);
+    //if (deleteResult) {
+    //    res.json({ success: true });
+    //} else {
+    //    res.status(500).json({ success: false });
+    //}
+});
+
 router.post("/agregation-with-having", async (req, res) => {
     const { minPlayerCount } = req.body;
     const agregationResult = await appService.agregationWithHaving(minPlayerCount);

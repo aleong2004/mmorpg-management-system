@@ -149,6 +149,38 @@ async function deleteItem(event) {
     }
 }
 
+// Projects the Quest table on the selected columns
+async function questProjection(event) {
+    event.preventDefault();
+/*
+    let inputs = [];
+    for (let i = 1; i <= 6; i++) {
+        const str = `projectionCol${i}`;
+        const val = document.getElementById(str).value;
+        inputs.push(val);
+    }
+
+    const response = await fetch('/quest-projection', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            userInput: inputs
+        })
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('ProjectionResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "Item deleted";
+    } else {
+        messageElement.textContent = responseData.error;
+    }
+*/
+}
+
 // 
 async function agregationWithHaving(event) {
     event.preventDefault();
@@ -424,6 +456,7 @@ window.onload = function() {
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("reloadDatabase").addEventListener("click", reloadDB);
     document.getElementById("deleteItem").addEventListener("submit", deleteItem);
+    document.getElementById("questProjection").addEventListener("submit", questProjection);
     document.getElementById("agregationWithHaving").addEventListener("submit", agregationWithHaving);
     document.getElementById("insertEnemy").addEventListener("submit", insertEnemy);
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);

@@ -92,6 +92,30 @@
     </form>
     <div id="deleteItemResultMsg"></div>
 
+    <h2>View Quest Data</h2>
+    <p>Enter the attributes of quest data to return. Attributes will be shown in order from top to bottom.</p>
+    <p>Available attributes to display are QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, and EventID</p>
+    <form id="questProjection">
+        <ul>
+            <li draggable="true">QuestID</li>
+            <li draggable="true">Name</li>
+            <li draggable="true">MinLevel</li>
+            <li draggable="true">EXP_Reward</li>
+            <li draggable="true">CurrencyReward</li>
+            <li draggable="true">EventID</li>
+        </ul>
+        <button type="submit"> View </button> <br>
+    </form>
+    <div id="ProjectionResultMsg"></div>
+    <table id="playerTable" border="1">
+        <thead>
+            <tr>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
 <br><hr><br> <!-- ========================================================================= -->
 
     <h2>Aggregation</h2>
