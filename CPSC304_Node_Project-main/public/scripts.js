@@ -144,6 +144,7 @@ async function deleteItem(event) {
 
     if (responseData.success) {
         messageElement.textContent = "Item deleted.";
+        fetchTableData();
     } else {
         messageElement.textContent = "Error: Cannot delete item.";
     }
@@ -613,7 +614,7 @@ async function updateEnemy(event) {
 
     if (responseData.success) {
         messageElement.textContent = "Enemy updated successfully!";
-        fetchAndDisplayEnemies();
+        fetchTableData();
     } else {
         messageElement.textContent = "Error updating enemy!";
     }
