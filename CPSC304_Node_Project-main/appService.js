@@ -181,7 +181,7 @@ async function countDemotable() {
 //async function insertEnemy(enemyData) { TODO: this shit got hands ;-;
 
 //delete query
-async function deleteItem() {
+async function deleteItem(itemId) {
     return await withOracleDB(async (connection) => {
         const result = await connection.execute(
             `DELETE FROM Item WHERE ItemID =: itemId`,
@@ -191,7 +191,7 @@ async function deleteItem() {
 
         return result.rowsAffected && result.rowsAffected > 0;
     }).catch(() => {
-        return -1;
+        return false;
     });
 }
 
@@ -209,7 +209,7 @@ async function agregationWithHaving(minPlayerCount) { // made smth - minPlayerCo
                 c.NumMembers,
                 MIN(p.PlayerLevel) AS MinPlayerLevel,
                 MAX(p.PlayerLevel) AS MaxPlayerLevel,
-                ROUND(AVG(p.PlayerLevel), 2) AS AvgPlayerLevel,
+                ROUND(AVG(p.PlayerLevel), 2) AS AvgPlayerLevel
             FROM Clan c
             JOIN Player p ON c.ClanName = p.ClanName
             GROUP BY

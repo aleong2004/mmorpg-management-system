@@ -123,6 +123,69 @@ async function reloadDB() {
     button.disabled = false;
 }
 
+// deletes item 
+async function deleteItem(event) {
+    event.preventDefault();
+
+    const itemIdVal = document.getElementById('deleteItemId').value;
+
+    const response = await fetch('/delete-item', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            itemId: itemIdVal
+        })
+    });
+
+    const responseData = await response.json();
+    const messageElement = document.getElementById('deleteItemResultMsg');
+
+    if (responseData.success) {
+        messageElement.textContent = "Item deleted";
+    } else {
+        messageElement.textContent = "Error while deleting the item";
+    }
+}
+
+// 
+async function agregationWithHaving(event) {
+    event.preventDefault();
+
+    const minPlayerCountVal = document.getElementById('minPlayerCount').value;
+
+    const response = await fetch('/agregation-with-having', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            minPlayerCount: minPlayerCountVal
+        })
+    });
+
+    const responseData = await response.json();
+    const message = document.getElementById('agregationWithHavingResultMsg');
+
+    const tableElement = document.getElementById('agregationWithHavingTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    // Always clear old, already fetched data before new fetching process.
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+
+    responseData.data.forEach(rowData => {
+        const row = tableBody.insertRow();
+        rowData.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
+}
+
 // Inserts new records into the demotable.
 async function insertDemotable(event) {
     event.preventDefault();
@@ -208,6 +271,8 @@ window.onload = function() {
     fetchTableData();
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("reloadDatabase").addEventListener("click", reloadDB);
+    document.getElementById("deleteItem").addEventListener("submit", deleteItem);
+    document.getElementById("agregationWithHaving").addEventListener("submit", agregationWithHaving);
     document.getElementById("insertDemotable").addEventListener("submit", insertDemotable);
     document.getElementById("updataNameDemotable").addEventListener("submit", updateNameDemotable);
     document.getElementById("countDemotable").addEventListener("click", countDemotable);

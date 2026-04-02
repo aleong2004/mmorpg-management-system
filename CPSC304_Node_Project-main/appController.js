@@ -43,6 +43,32 @@ router.post("/reload-db", async (req, res) => {
     }
 });
 
+router.post("/delete-item", async (req, res) => {
+    const { itemId } = req.body;
+    const deleteResult = await appService.deleteItem(itemId);
+    if (deleteResult) {
+        res.json({ success: true });
+    } else {
+        res.status(500).json({ success: false });
+    }
+});
+
+router.post("/agregation-with-having", async (req, res) => {
+    const { minPlayerCount } = req.body;
+    const agregationResult = await appService.agregationWithHaving(minPlayerCount);
+    if (agregationResult !== -1) {
+        res.json({ 
+            success: true,
+            data: agregationResult
+        });
+    } else {
+        res.status(500).json({ 
+            success: false,
+            data: agregationResult
+        });
+    }
+});
+
 router.post("/insert-demotable", async (req, res) => {
     const { id, name } = req.body;
     const insertResult = await appService.insertDemotable(id, name);
