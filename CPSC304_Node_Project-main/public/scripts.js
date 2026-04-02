@@ -646,7 +646,26 @@ async function friendsWithAllClanMembers() {
             cell.textContent = field;
         });
     });
-    
+}
+
+async function fetchAndDisplayPlayerCounts() {
+    const tableElement = document.getElementById("playerCountsTable");
+    const tableBody = tableElement.querySelector("tbody");
+    const response = await fetch("/player-count-by-location", {
+        method: "GET"
+    });
+    const responseData = await response.json();
+    const playerContent = responseData.data;
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    playerContent.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
 }
 
 // ---------------------------------------------------------------
@@ -678,6 +697,7 @@ window.onload = function() {
     document.getElementById("updateEnemyForm").addEventListener("submit", updateEnemy);
     document.getElementById("playerAbilitiesForm").addEventListener("submit", getPlayerAbilities);
     document.getElementById("divisionQuery").addEventListener("click", friendsWithAllClanMembers);
+    document.getElementById("playerCountsByLocation").addEventListener("click", fetchAndDisplayPlayerCounts);
     
 };
 

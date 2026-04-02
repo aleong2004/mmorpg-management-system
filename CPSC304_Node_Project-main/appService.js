@@ -98,7 +98,7 @@ async function fetchPlayerData() {
                    p.LocationID = loc.LocationID AND
                    p.PlayerLevel = pl.PlayerLevel AND
                    p.ClassID = pl.ClassID`
-            );
+                );
         return result.rows;
     }).catch(() => {
         return [];
@@ -498,6 +498,22 @@ async function agregationWithHaving(minPlayerCount) { // made smth - minPlayerCo
     });
 }
 
+// including loc.Name in the grouping should be fine since LocationID is a primary key
+async function playerCountByLocation() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT loc.LocationID, loc.Name, COUNT(*)
+             FROM Location loc, Player p
+             WHERE loc.LocationID = p.LocationID
+             GROUP BY loc.LocationID, loc.Name
+             ORDER BY COUNT(*)`
+        );
+        return result.rows;
+    }).catch(() => {
+        return [];
+    })
+}
+
 module.exports = {
     testOracleConnection,
     fetchDemotableFromDb,
@@ -515,5 +531,6 @@ module.exports = {
     fetchEnemyData,
     updateEnemy,
     getPlayerAbilities,
-    getPlayersfriendsWithAllClanMembers
+    getPlayersfriendsWithAllClanMembers,
+    playerCountByLocation
 };

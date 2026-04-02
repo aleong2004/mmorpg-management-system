@@ -167,4 +167,9 @@ router.get('/friends-with-all-clan-members', async (req, res) => {
     res.json({ data: result });
 });
 
+router.get('/player-count-by-location', async (req, res) => {
+    const counts = await appService.fetchDemotableFromDb();
+    res.json({data: counts});
+});
+
 module.exports = router;
