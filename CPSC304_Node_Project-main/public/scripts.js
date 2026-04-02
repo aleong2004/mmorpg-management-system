@@ -152,33 +152,85 @@ async function deleteItem(event) {
 // Projects the Quest table on the selected columns
 async function questProjection(event) {
     event.preventDefault();
-/*
-    let inputs = [];
-    for (let i = 1; i <= 6; i++) {
-        const str = `projectionCol${i}`;
-        const val = document.getElementById(str).value;
-        inputs.push(val);
+
+    const messageElement = document.getElementById('ProjectionResultMsg');
+    const questidOrder = document.getElementById("projectionQuestID").valueAsNumber;
+    const nameOrder = document.getElementById("projectionName").valueAsNumber;
+    const minLevelOrder = document.getElementById("projectionMinLevel").valueAsNumber;
+    const expOrder = document.getElementById("projectionEXP").valueAsNumber;
+    const currencyOrder = document.getElementById("projectionCurrency").valueAsNumber;
+    const eventidOrder = document.getElementById("projectionEventID").valueAsNumber;
+
+    // remove attributes with no ordering, ensure at least one attribute has an ordering, and ensure there are no duplicates
+    let ordering = [questidOrder, nameOrder, minLevelOrder, expOrder, currencyOrder, eventidOrder];
+    ordering = ordering.filter(order => !isNaN(order));
+    if (ordering.length === 0) {
+        messageElement.textContent = "Error: At least one field must be filled.";
+        return;
+    }
+    if (ordering.length !== new Set(ordering).size) {
+        messageElement.textContent = "Error: Ordering contains duplicates!";
+        return;
     }
 
-    const response = await fetch('/quest-projection', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            userInput: inputs
-        })
+    ordering.sort((x, y) => x - y);
+    for (let i = 0; i < ordering.length; i ++) {
+        if (ordering[i] === questidOrder) {
+            ordering[i] = "QuestID";
+        } else if (ordering[i] === nameOrder) {
+            ordering[i] = "Name";
+        } else if (ordering[i] === minLevelOrder) {
+            ordering[i] = "MinLevel";
+        } else if (ordering[i] === expOrder) {
+            ordering[i] = "EXP_Reward";
+        } else if (ordering[i] === currencyOrder) {
+            ordering[i] = "CurrencyReward";
+        } else { // ordering[i] === eventidOrder
+            ordering[i] = "EventID";
+        }
+    }
+
+    const params = new URLSearchParams({
+        "order": ordering
+    });
+
+    const response = await fetch(`/quest-projection?${params}`, {
+        method: 'GET'
     });
 
     const responseData = await response.json();
-    const messageElement = document.getElementById('ProjectionResultMsg');
+    const questContent = responseData.data;
 
     if (responseData.success) {
-        messageElement.textContent = "Item deleted";
+        messageElement.textContent = "Requested data:";
     } else {
-        messageElement.textContent = responseData.error;
+        messageElement.textContent = "Error requesting quest data..."
+        return;
     }
-*/
+
+    const tableElement = document.getElementById('questTable');
+    const tableHead = tableElement.querySelector('thead');
+    const tableBody = tableElement.querySelector('tbody');
+    if (tableHead) {
+        tableHead.innerHTML = '';
+    }
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+    
+    const header = tableHead.insertRow();
+    ordering.forEach(order => {
+        const headerCell = header.insertCell();
+        headerCell.textContent = order;
+    });
+    
+    questContent.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
 }
 
 // 

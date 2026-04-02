@@ -94,25 +94,26 @@
 
     <br><hr><br> <!-- ========================================================================= -->
 
-    <h2>View Quest Data (test)</h2>
-    <p>Enter the attributes of quest data to return. Attributes will be shown in order from top to bottom.</p>
-    <p>Available attributes to display are QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, and EventID</p>
+    <h2>View Quest Data</h2>
+    <p>
+        Enter the order of attributes to return. Attributes will be shown from left to right in ascending order.
+        <br>
+        Attributes that are left blank will not be shown.
+    </p>
     <form id="questProjection">
         <ul>
-            <li>QuestID: <input type="number" id="projectionCol1"></input></li>
-            <li>Name: <input type="number" id="projectionCol2"></input></li>
-            <li>MinLevel: <input type="number" id="projectionCol3"></input></li>
-            <li>EXP_Reward: <input type="number" id="projectionCol4"></input></li>
-            <li>CurrencyReward: <input type="number" id="projectionCol5"></input></li>
-            <li>EventID: <input type="number" id="projectionCol6"></input></li>
+            <li>Quest ID: <input type="number" id="projectionQuestID"></input></li>
+            <li>Name: <input type="number" id="projectionName"></input></li>
+            <li>Minimum Level: <input type="number" id="projectionMinLevel"></input></li>
+            <li>EXP Reward: <input type="number" id="projectionEXP"></input></li>
+            <li>Currency Reward: <input type="number" id="projectionCurrency"></input></li>
+            <li>Event ID: <input type="number" id="projectionEventID"></input></li>
         </ul>
         <button type="submit"> View </button> <br>
     </form>
     <div id="ProjectionResultMsg"></div>
-    <table id="playerTable" border="1">
+    <table id="questTable" border="1">
         <thead>
-            <tr>
-            </tr>
         </thead>
         <tbody>
         </tbody>
