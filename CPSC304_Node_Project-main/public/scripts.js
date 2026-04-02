@@ -770,7 +770,7 @@ window.onload = function() {
 // General function to refresh the displayed table data. 
 // You can invoke this after any table-modifying operation to keep consistency.
 function fetchTableData() {
-    fetchAndDisplayUsers();
+    //fetchAndDisplayUsers();
     fetchAndDisplayPlayers();
     fetchAndDisplayEnemies();
 }
