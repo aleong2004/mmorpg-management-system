@@ -300,7 +300,7 @@ async function agregationWithHaving(minPlayerCount) { // made smth - minPlayerCo
                 c.ClanName,
                 c.MinLevelToJoin,
                 c.ClanRank,   
-                c.NumMembers,
+                COUNT(p.Username) AS NumMembers,
                 MIN(p.PlayerLevel) AS MinPlayerLevel,
                 MAX(p.PlayerLevel) AS MaxPlayerLevel,
                 ROUND(AVG(p.PlayerLevel), 2) AS AvgPlayerLevel
