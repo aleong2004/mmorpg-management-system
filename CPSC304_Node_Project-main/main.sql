@@ -254,7 +254,7 @@ INSERT INTO Quest (QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, EventID)
 INSERT INTO Quest (QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, EventID) VALUES (3, 'Win 3 Arena Matches', 10, 200, 120, 4);
 INSERT INTO Quest (QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, EventID) VALUES (4, 'Hunt Wolves', 8, 160, 90, 5);
 INSERT INTO Quest (QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, EventID) VALUES (5, 'Deliver Supplies', 1, 50, 25, 1);
-
+INSERT INTO Quest (QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, EventID) VALUES (6, 'Find Jerry', 1, 20, 30, NULL);
 
 INSERT INTO Location (LocationID, Name, Terrain, LocalTime, LocationLevel, Weather) VALUES (1, 'Greenhaven', 'Plains', 'Morning', 1, 'Sunny');
 INSERT INTO Location (LocationID, Name, Terrain, LocalTime, LocationLevel, Weather) VALUES (2, 'Ashen Peak', 'Mountain', 'Noon', 12, 'Windy');
@@ -330,18 +330,40 @@ INSERT INTO Item (ItemID, Name, ItemType, BaseCost) VALUES (2, 'Oak Staff', 'Wea
 INSERT INTO Item (ItemID, Name, ItemType, BaseCost) VALUES (3, 'Hunter Bow', 'Weapon', 145);
 INSERT INTO Item (ItemID, Name, ItemType, BaseCost) VALUES (4, 'Blessed Dagger', 'Weapon', 135);
 INSERT INTO Item (ItemID, Name, ItemType, BaseCost) VALUES (5, 'War Hammer', 'Weapon', 170);
+INSERT INTO Item (ItemID, Name, ItemType, BaseCost) VALUES (6, 'Preserved Heirloom', 'Artifact', 500);
+INSERT INTO Item (ItemID, Name, ItemType, BaseCost) VALUES (7, 'Health Potion', 'Consumable', 50);
+INSERT INTO Item (ItemID, Name, ItemType, BaseCost) VALUES (8, 'Mana Potion', 'Consumable', 100);
+INSERT INTO Item (ItemID, Name, ItemType, BaseCost) VALUES (9, 'Ornate Jewelry', 'Artifact', 1200);
+INSERT INTO Item (ItemID, Name, ItemType, BaseCost) VALUES (10, 'Thick Club', 'Weapon', 90);
 
 INSERT INTO Weapon (ItemID, WeaponStats, MinStats, BuffsToBaseStats) VALUES (1, 'HP: 0, ATK: 20, DEF: 0, SPD: 0', 'HP: 0, ATK: 10, DEF: 0, SPD: 0', 'HP: 0, ATK: 2, DEF: 0, SPD: 0');
 INSERT INTO Weapon (ItemID, WeaponStats, MinStats, BuffsToBaseStats) VALUES (2, 'HP: 0, ATK: 16, DEF: 0, SPD: 2', 'HP: 0, ATK: 6, DEF: 0, SPD: 4', 'HP: 0, ATK: 3, DEF: 0, SPD: 1');
 INSERT INTO Weapon (ItemID, WeaponStats, MinStats, BuffsToBaseStats) VALUES (3, 'HP: 0, ATK: 18, DEF: 0, SPD: 4', 'HP: 0, ATK: 8, DEF: 0, SPD: 8', 'HP: 0, ATK: 2, DEF: 0, SPD: 2');
 INSERT INTO Weapon (ItemID, WeaponStats, MinStats, BuffsToBaseStats) VALUES (4, 'HP: 0, ATK: 17, DEF: 0, SPD: 6', 'HP: 0, ATK: 7, DEF: 0, SPD: 9', 'HP: 0, ATK: 2, DEF: 0, SPD: 3');
 INSERT INTO Weapon (ItemID, WeaponStats, MinStats, BuffsToBaseStats) VALUES (5, 'HP: 20, ATK: 24, DEF: 2, SPD: -2', 'HP: 0, ATK: 14, DEF: 4, SPD: 0', 'HP: 10, ATK: 3, DEF: 1, SPD: -1');
+INSERT INTO Weapon (ItemID, WeaponStats, MinStats, BuffsToBaseStats) VALUES (6, 'HP: 0, ATK: 28, DEF: -5, SPD: -5', 'HP: 30, ATK: 20, DEF: 0, SPD: 0', 'HP: 15, ATK: 10, DEF: 0, SPD: 0');
 
 INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (1, 4, 0.20);
-INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (2, 2, 0.15);
-INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (3, 3, 0.25);
-INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (4, 5, 0.10);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (20, 6, 0.18);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (22, 7, 0.10);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (11, 8, 0.17);
 INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (5, 1, 0.18);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (2, 2, 0.15);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (23, 10, 0.12);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (16, 8, 0.40);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (12, 7, 0.50);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (3, 3, 0.25);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (15, 9, 0.05);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (4, 5, 0.10);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (7, 9, 1.0);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (1, 7, 0.15);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (15, 8, 0.10);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (16, 6, 0.60);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (12, 10, 0.10);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (11, 7, 0.08);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (15, 6, 0.15);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (23, 7, 0.35);
+INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (16, 9, 1.0);
 
 INSERT INTO PlayerLevel (PlayerLevel, ClassID, BaseStats) VALUES (5, 1, 'HP: 180, ATK: 18, DEF: 14, SPD: 6');
 INSERT INTO PlayerLevel (PlayerLevel, ClassID, BaseStats) VALUES (8, 2, 'HP: 110, ATK: 8, DEF: 6, SPD: 10');
@@ -371,18 +393,33 @@ INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, Profe
 INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('awesomeguy4', 9, 565, 175, TO_TIMESTAMP('2026-03-22 21:45:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 3, 'Super Awesome Cool Guy Squad', 5);
 INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('Michael Scott', 6, 677, 67, TO_TIMESTAMP('2026-03-25 16:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 4, 'Super Awesome Cool Guy Squad', 5);
 INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('TheLegend27', 27, 329, 600, TO_TIMESTAMP('2026-03-30 12:00:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 5, NULL, 5);
-INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('Tyler Ninja Blevins', 15, 2581, 240, TO_TIMESTAMP('2026-03-19 19:45:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 4, NULL, 3);
+INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('Tyler Ninja Blevins', 15, 2581, 240, TO_TIMESTAMP('2026-03-19 19:45:00', 'YYYY-MM-DD HH24:MI:SS'), 1, 4, 'DragonSlayers', 3);
 INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('johngamer', 19, 1188, 321, TO_TIMESTAMP('2026-04-01 21:44:30', 'YYYY-MM-DD HH24:MI:SS'), 4, 4, NULL, 3);
-INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('aaaaaa', 11, 246, 180, TO_TIMESTAMP('2026-03-31 02:30:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 5, NULL, 2);
-INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('kaicenat', 14, 923, 46, TO_TIMESTAMP('2026-03-17 21:01:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 2, NULL, 5);
-INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('ishowspeed', 14, 895, 103, TO_TIMESTAMP('2026-03-17 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 3, NULL, 5);
-INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('fortnite', 45, 24020, 1200, TO_TIMESTAMP('2026-04-02 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 1, NULL, 4);
+INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('aaaaaa', 11, 246, 180, TO_TIMESTAMP('2026-03-31 02:30:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 5, 'MoonGuard', 2);
+INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('kaicenat', 14, 923, 46, TO_TIMESTAMP('2026-03-17 21:01:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 2, 'ShadowLeaf', 5);
+INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('ishowspeed', 14, 895, 103, TO_TIMESTAMP('2026-03-17 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 3, 'ShadowLeaf', 5);
+INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('fortnite', 45, 24020, 1200, TO_TIMESTAMP('2026-04-02 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 1, 'DragonSlayers', 4);
 
 INSERT INTO InInventory (Username, ItemID) VALUES ('todd', 2);
 INSERT INTO InInventory (Username, ItemID) VALUES ('jonsnow', 1);
 INSERT INTO InInventory (Username, ItemID) VALUES ('aegon', 3);
 INSERT INTO InInventory (Username, ItemID) VALUES ('walterwhite', 5);
 INSERT INTO InInventory (Username, ItemID) VALUES ('jesse', 4);
+INSERT INTO InInventory (Username, ItemID) VALUES ('aaaaaa', 6);
+INSERT INTO InInventory (Username, ItemID) VALUES ('jonsnow', 8);
+INSERT INTO InInventory (Username, ItemID) VALUES ('aegon', 7);
+INSERT INTO InInventory (Username, ItemID) VALUES ('Tyler Ninja Blevins', 10);
+INSERT INTO InInventory (Username, ItemID) VALUES ('awesomeguy4', 7);
+INSERT INTO InInventory (Username, ItemID) VALUES ('awesomeguy3', 7);
+INSERT INTO InInventory (Username, ItemID) VALUES ('awesomeguy1', 1);
+INSERT INTO InInventory (Username, ItemID) VALUES ('kaicenat', 5);
+INSERT INTO InInventory (Username, ItemID) VALUES ('awesomeguy2', 2);
+INSERT INTO InInventory (Username, ItemID) VALUES ('fortnite', 9);
+INSERT INTO InInventory (Username, ItemID) VALUES ('ishowspeed', 4);
+INSERT INTO InInventory (Username, ItemID) VALUES ('Michael Scott', 8);
+INSERT INTO InInventory (Username, ItemID) VALUES ('Michael Scott', 7);
+INSERT INTO InInventory (Username, ItemID) VALUES ('walterwhite', 4);
+INSERT INTO InInventory (Username, ItemID) VALUES ('fortnite', 10);
 
 INSERT INTO IsActive (Username, QuestID) VALUES ('todd', 2);
 INSERT INTO IsActive (Username, QuestID) VALUES ('jonsnow', 5);
@@ -408,3 +445,13 @@ INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy1', 'awesomeguy4
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy1', 'awesomeguy2');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy2', 'awesomeguy3');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy3', 'awesomeguy4');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('walterwhite', 'Tyler Ninja Blevins');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('fortnite', 'walterwhite');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('ishowspeed', 'kaicenat');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('ishowspeed', 'aegon');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Michael Scott', 'aaaaaa');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('fortnite', 'johngamer');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('johngamer', 'todd');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Tyler Ninja Blevins', 'kaicenat');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Tyler Ninja Blevins', 'ishowspeed');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('fortnite', 'aaaaaa');
