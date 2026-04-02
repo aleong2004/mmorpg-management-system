@@ -506,7 +506,7 @@ async function playerCountByLocation() {
              FROM Location loc, Player p
              WHERE loc.LocationID = p.LocationID
              GROUP BY loc.LocationID, loc.Name
-             ORDER BY COUNT(*)`
+             ORDER BY COUNT(*) DESC`
         );
         return result.rows;
     }).catch(() => {
