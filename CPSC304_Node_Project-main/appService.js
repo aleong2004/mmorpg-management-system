@@ -239,6 +239,30 @@ async function getPlayerAbilities(username) {
     });
     
 }
+
+async function getPlayersfriendsWithAllClanMembers() {
+    return await withOracleDB(async (connection) => {
+        const result = await connection.execute(
+            `SELECT p.Username, p.ClanName, cl.ClanRank, cl.NumMembers
+            FROM Player p
+            JOIN Clan cl ON p.ClanName = cl.ClanName
+            WHERE p.ClanName IS NOT NULL
+            AND (SELECT COUNT(*) FROM Player p3 WHERE p3.ClanName = p.ClanName) > 1
+            AND NOT EXISTS (
+                    SELECT p2.Username
+                    FROM Player p2
+                    WHERE p2.ClanName = p.ClanName
+                    AND p2.Username != p.Username
+                    MINUS
+                    SELECT f.Player2
+                    FROM IsFriendsWith f
+                    WHERE f.Player1 = p.Username)`
+        );
+        return result.rows;
+    }).catch(() => {
+        return [];
+    });
+}
 // STUFF
 
 // Insert query
@@ -336,5 +360,6 @@ module.exports = {
     insertEnemy,
     fetchEnemyData,
     updateEnemy,
-    getPlayerAbilities
+    getPlayerAbilities,
+    getPlayersfriendsWithAllClanMembers
 };
