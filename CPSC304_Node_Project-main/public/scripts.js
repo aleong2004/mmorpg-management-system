@@ -169,7 +169,7 @@ async function questProjection(event) {
         return;
     }
     if (ordering.length !== new Set(ordering).size) {
-        messageElement.textContent = "Error: Ordering contains duplicates!";
+        messageElement.textContent = "Error: Ordering cannot contain duplicates.";
         return;
     }
 

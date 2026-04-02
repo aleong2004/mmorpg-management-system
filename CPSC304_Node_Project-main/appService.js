@@ -316,6 +316,7 @@ async function deleteItem(itemId) {
 // ordering is an array of strings, each string is a column to be returned (in order)
 async function questProjection(ordering) {
     return await withOracleDB(async (connection) => {
+        console.log(ordering);
         const allowedCols = ["QuestID", "Name", "MinLevel", "EXP_Reward", "CurrencyReward", "EventID"];
         if (ordering.length === 0) {
             return -1;
@@ -325,9 +326,11 @@ async function questProjection(ordering) {
                 return -2;
             }
         }
+        console.log("test");
         const result = await connection.execute(
             `SELECT ${ordering.join(", ")} FROM Quest`
         );
+        console.log("test2");
 
         return result.rows;
     }).catch(() => {
