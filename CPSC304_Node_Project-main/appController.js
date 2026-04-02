@@ -25,6 +25,11 @@ router.get('/player-table', async (req, res) => {
     res.json({data: playerContent});
 });
 
+router.get('/item-table', async (req, res) => {
+    const tableContent = await appService.fetchItemData();
+    res.json({data: playerContent});
+});
+
 router.post("/initiate-demotable", async (req, res) => {
     const initiateResult = await appService.initiateDemotable();
     if (initiateResult) {
@@ -145,8 +150,8 @@ router.get('/enemy-table', async (req,res) => {
 });
 
 router.post('/update-enemy', async (req, res) => {
-    const {npcId, enemySpecies, expDropped, goldDropped} = req.body;
-    const updateResult = await appService.updateEnemy(npcId, enemySpecies, expDropped, goldDropped);
+    const { npcId, name, npcLevel, baseStats, locationId, enemySpecies, expDropped, goldDropped } = req.body;
+    const updateResult = await appService.updateEnemy(npcId, name, npcLevel, baseStats, locationId, enemySpecies, expDropped, goldDropped);
     if (updateResult) {
         res.json({success : true});
     } else {

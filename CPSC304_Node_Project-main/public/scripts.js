@@ -144,6 +144,7 @@ async function deleteItem(event) {
 
     if (responseData.success) {
         messageElement.textContent = "Item deleted";
+        fetchAndDisplayItems();
     } else {
         messageElement.textContent = "Error while deleting the item";
     }
@@ -556,10 +557,35 @@ async function fetchAndDisplayEnemies() {
         tableRow.style.cursor = 'pointer';
         tableRow.addEventListener('click', () => {
             document.getElementById('updateNpcId').value = row[0];
-            document.getElementById('updateEnemySpecies').value = row[2];
-            document.getElementById('updateExpDropped').value = row[3];
-            document.getElementById('updateGoldDropped').value = row[4];
+            document.getElementById('updateName').value = row[1];
+            document.getElementById('updateNpcLevel').value = row[2];
+            document.getElementById('updateBaseStats').value = row[3];
+            document.getElementById('updateLocationId').value = row[4];
+            document.getElementById('updateEnemySpecies').value = row[5];
+            document.getElementById('updateExpDropped').value = row[6];
+            document.getElementById('updateGoldDropped').value = row[7];
+        });
+    });
+    
+}
 
+//for displaying the item table, delete query
+async function fetchAndDisplayItems() {
+    const tableElement = document.getElementById('itemTable');
+    const tableBody = tableElement.querySelector('tbody');
+
+    const response = await fetch('/item-table',{method: 'GET'});
+    const responseData = await response.json();
+
+    if (tableBody) tableBody.innerHTML = '';
+
+
+    responseData.data.forEach(row => {
+        
+        const tableRow = tableBody.insertRow();
+        row.forEach((field, index) => {
+            const cell = tableRow.insertCell(index);
+            cell.textContent = field;
         });
     });
     
@@ -569,6 +595,10 @@ async function updateEnemy(event) {
     event.preventDefault();
 
     const npcId = document.getElementById('updateNpcId').value;
+    const name = document.getElementById('updateName').value;
+    const npcLevel = document.getElementById('updateNpcLevel').value;
+    const baseStats = document.getElementById('updateBaseStats').value;
+    const locationId = document.getElementById('updateLocationId').value;
     const enemySpecies = document.getElementById('updateEnemySpecies').value;
     const expDropped = document.getElementById('updateExpDropped').value;
     const goldDropped = document.getElementById('updateGoldDropped').value;
@@ -576,7 +606,7 @@ async function updateEnemy(event) {
     const response = await fetch('/update-enemy', {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({npcId, enemySpecies, expDropped, goldDropped})
+        body: JSON.stringify({ npcId, name, npcLevel, baseStats, locationId, enemySpecies, expDropped, goldDropped })
     });
 
     const responseData = await response.json();
@@ -709,6 +739,7 @@ window.onload = function() {
     checkDbConnection();
     fetchTableData();
     fetchAndDisplayEnemies();
+    fetchAndDisplayItems();
     document.getElementById("resetDemotable").addEventListener("click", resetDemotable);
     document.getElementById("reloadDatabase").addEventListener("click", reloadDB);
     document.getElementById("deleteItem").addEventListener("submit", deleteItem);
