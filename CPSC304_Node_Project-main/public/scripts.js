@@ -164,7 +164,7 @@ async function questProjection(event) {
     }
     console.log(ordering);
     return;
-    
+
     const questidOrder = document.getElementById("projectionQuestID").valueAsNumber;
     const nameOrder = document.getElementById("projectionName").valueAsNumber;
     const minLevelOrder = document.getElementById("projectionMinLevel").valueAsNumber;
@@ -246,7 +246,8 @@ async function questProjection(event) {
     });
 }
 
-async function addAttrToProjection(button) {
+async function addAttrToProjection(event) {
+    const button = event.target;
     const tableElement = document.getElementById("projectionTable");
     const tableBody = tableElement.querySelector('tbody');
     const row = tableBody.insertRow();
