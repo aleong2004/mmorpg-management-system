@@ -162,44 +162,6 @@ async function questProjection(event) {
     for (const tr of trows) {
         ordering.push(tr.id);
     }
-    console.log(ordering);
-    return;
-
-    const questidOrder = document.getElementById("projectionQuestID").valueAsNumber;
-    const nameOrder = document.getElementById("projectionName").valueAsNumber;
-    const minLevelOrder = document.getElementById("projectionMinLevel").valueAsNumber;
-    const expOrder = document.getElementById("projectionEXP").valueAsNumber;
-    const currencyOrder = document.getElementById("projectionCurrency").valueAsNumber;
-    const eventidOrder = document.getElementById("projectionEventID").valueAsNumber;
-
-    // remove attributes with no ordering, ensure at least one attribute has an ordering, and ensure there are no duplicates
-    //let ordering = [questidOrder, nameOrder, minLevelOrder, expOrder, currencyOrder, eventidOrder];
-    ordering = ordering.filter(order => !isNaN(order));
-    if (ordering.length === 0) {
-        messageElement.textContent = "Error: At least one field must be filled.";
-        return;
-    }
-    if (ordering.length !== new Set(ordering).size) {
-        messageElement.textContent = "Error: Ordering cannot contain duplicates.";
-        return;
-    }
-
-    ordering.sort((x, y) => x - y);
-    for (let i = 0; i < ordering.length; i ++) {
-        if (ordering[i] === questidOrder) {
-            ordering[i] = "QuestID";
-        } else if (ordering[i] === nameOrder) {
-            ordering[i] = "Name";
-        } else if (ordering[i] === minLevelOrder) {
-            ordering[i] = "MinLevel";
-        } else if (ordering[i] === expOrder) {
-            ordering[i] = "EXP_Reward";
-        } else if (ordering[i] === currencyOrder) {
-            ordering[i] = "CurrencyReward";
-        } else { // ordering[i] === eventidOrder
-            ordering[i] = "EventID";
-        }
-    }
 
     const response = await fetch(`/quest-projection`, {
         method: 'POST',
