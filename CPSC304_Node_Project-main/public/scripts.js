@@ -144,7 +144,6 @@ async function deleteItem(event) {
 
     if (responseData.success) {
         messageElement.textContent = "Item deleted.";
-        fetchAndDisplayItems();
     } else {
         messageElement.textContent = "Error: Cannot delete item.";
     }
