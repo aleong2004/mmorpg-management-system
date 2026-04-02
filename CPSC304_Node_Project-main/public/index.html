@@ -92,17 +92,19 @@
     </form>
     <div id="deleteItemResultMsg"></div>
 
-    <h2>View Quest Data</h2>
+    <br><hr><br> <!-- ========================================================================= -->
+
+    <h2>View Quest Data (test)</h2>
     <p>Enter the attributes of quest data to return. Attributes will be shown in order from top to bottom.</p>
     <p>Available attributes to display are QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, and EventID</p>
     <form id="questProjection">
         <ul>
-            <li draggable="true">QuestID</li>
-            <li draggable="true">Name</li>
-            <li draggable="true">MinLevel</li>
-            <li draggable="true">EXP_Reward</li>
-            <li draggable="true">CurrencyReward</li>
-            <li draggable="true">EventID</li>
+            <li>QuestID: <input type="number" id="projectionCol1"></input></li>
+            <li>Name: <input type="number" id="projectionCol2"></input></li>
+            <li>MinLevel: <input type="number" id="projectionCol3"></input></li>
+            <li>EXP_Reward: <input type="number" id="projectionCol4"></input></li>
+            <li>CurrencyReward: <input type="number" id="projectionCol5"></input></li>
+            <li>EventID: <input type="number" id="projectionCol6"></input></li>
         </ul>
         <button type="submit"> View </button> <br>
     </form>
