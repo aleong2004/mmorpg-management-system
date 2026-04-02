@@ -161,6 +161,9 @@ async function questProjection(event) {
     for (const tr of trows) {
         ordering.push(tr.id);
     }
+    if (ordering.length === 0) {
+        messageElement.textContent = "Error: At least one attribute needs to be included.";
+    }
 
     const response = await fetch(`/quest-projection`, {
         method: 'POST',
@@ -227,12 +230,74 @@ async function addAttrToProjection(event) {
 
 async function playerSelection(event) {
     event.preventDefault();
-    const messageElement = document.getElementById("ProjectionResultMsg");
+    const messageElement = document.getElementById("SelectionResultMsg");
     const selectionTable = document.getElementById("SelectionTable");
     const tbody = selectionTable.querySelector("tbody");
     const trows = tbody.querySelectorAll("tr");
 
-    messageElement.textContent = "Not implemented";
+    let conds = []
+    for (const tr of trows) {
+        let cond = [];
+        tds = tr.querySelectorAll("td");
+        if (tds.length !== 5) {
+            messageElement.textContent = "Error in player selection script";
+            console.log("script.js is not parsing the selection table properly");
+            return;
+        }
+        for (let i = 0; i < 4; i++) {
+            cond.push(tds[i].textContent);
+        }
+        conds.push(cond);
+    }
+
+    const response = await fetch(`/select-players`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            condList: conds
+        })
+    });
+
+    const responseData = await response.json();
+    const selectedPlayers = responseData.data;
+
+    if (responseData.success) {
+        messageElement.textContent = `Returned ${selectedPlayers.length} players:`
+    } else {
+        messageElement.textContent = "Error requesting selected players..."
+        return;
+    }
+
+    const tableElement = document.getElementById('selectedPlayerTable');
+    const tableHead = tableElement.querySelector('thead');
+    const tableBody = tableElement.querySelector('tbody');
+    if (tableHead) {
+        tableHead.innerHTML = '';
+    }
+    if (tableBody) {
+        tableBody.innerHTML = '';
+    }
+
+    const header = tableHead.insertRow();
+    const columns = [
+        "Username", "Player Level", "Base Stats", "Currency", "Mana",
+        "Last Seen Online", "Profession ID", "Profession Name","Class ID",
+        "Class Name", "Clan Name", "Location ID", "Location Name"
+    ];
+    columns.forEach(column => {
+        const headerCell = header.insertCell();
+        headerCell.textContent = column;
+    });
+
+    selectedPlayers.forEach(user => {
+        const row = tableBody.insertRow();
+        user.forEach((field, index) => {
+            const cell = row.insertCell(index);
+            cell.textContent = field;
+        });
+    });
 }
 
 async function addNumericalCondToSelection(event) {

@@ -129,6 +129,7 @@
     <h2>Player Search</h2>
     <p>
         Search for players that meet certain conditions. Conditions are evaluated in the order they were added.<br>
+        AND/OR will be ignored for the first condition.
     </p>
     <form id="searchNumerical">
         <div>
@@ -138,7 +139,7 @@
                 <option value="OR">OR</option>
             </select>
             <select id="selectNumericalAttr" name="selectNumericalAttr">
-                <option value="PlayerLevel">Level</option>
+                <option value="Player Level">Level</option>
                 <option value="Currency">Currency</option>
                 <option value="Mana">Mana</option>
                 <option value="Profession ID">Profession ID</option>
@@ -222,8 +223,8 @@
         <button type="submit">Find Players</button> <br>
     </form>
     <br><br>
-    <div id="ProjectionResultMsg"></div>
-    <table id="questTable" border="1">
+    <div id="SelectionResultMsg"></div>
+    <table id="selectedPlayerTable" border="1">
         <thead>
         </thead>
         <tbody>

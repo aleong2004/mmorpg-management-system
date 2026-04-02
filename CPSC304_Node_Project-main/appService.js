@@ -336,6 +336,119 @@ async function questProjection(ordering) {
     });
 }
 
+// condList is an array, each element in condList is an array of length 4.
+// First element is the condition AND/OR, second element is the attribute,
+// third element is the inequality, fourth element is the value
+async function selectPlayers(condList) {
+    return await withOracleDB(async (connection) => {
+        console.log(condList);
+        const conds = ["AND", "OR"];
+        const columns = [
+            "p.Username", "p.PlayerLevel", "pl.BaseStats", "p.Currency", "p.Mana",
+            "p.LastSeenOnline", "p.ProfessionID", "prof.Name", "p.ClassID",
+            "c.Name", "p.ClanName", "loc.LocationID", "loc.Name"
+        ];
+        const inequalities = ["=", "!=", ">", ">=", "<", "<=", "LIKE"];
+        const from_clause = "Player p, PlayerLevel pl, Location loc, Profession prof, Class c";
+        const join_clause = `p.ProfessionID = prof.ProfessionID AND 
+                             p.ClassID = c.ClassID AND
+                             p.LocationID = loc.LocationID AND 
+                             p.PlayerLevel = pl.PlayerLevel AND
+                             p.ClassID = pl.ClassID`;
+        if (condList.length === 0) {
+            const result = await connection.execute(
+                `SELECT ${columns.join(", ")} FROM ${from_clause} WHERE ${join_clause}`
+            );
+            return result.rows;
+        }
+
+        const parsedList = parseCondList(condList);
+        console.log(parsedList);
+        for (const cond in parsedList) {
+            if (!conds.includes(cond[0]) || !columns.includes(cond[1]) || !inequalities.includes(cond[2])) {
+                return -2;
+            }
+        }
+
+        let where_clause = ``;
+        let binds = {};
+        for (let i = 0; i < parsedList.length; i++) {
+            const curr_cond = parsedList[i];
+            const key = `var${i}`;
+            if (i == 0) {
+                where_clause = `${where_clause}${curr_cond[1]} ${curr_cond[2]} :${key}`;
+            } else {
+                where_clause = `${where_clause} ${curr_cond[0]} ${curr_cond[1]} ${curr_cond[2]} :${key}`;
+            }
+            binds[key] = curr_cond[3];
+        }
+        console.log(where_clause);
+        const result = await connection.execute(
+            `SELECT ${columns.join(", ")} 
+             FROM ${from_clause} 
+             WHERE ${where_clause} AND ${join_clause}`,
+             binds
+        );
+        console.log(result.rows);
+        return result.rows;
+    }).catch(() => {
+        return false;
+    });
+}
+
+
+function parseCondList(condList) {
+    for (const cond of condList) {
+        if (cond[1] === "Player Level") {
+            cond[1] = "p.PlayerLevel";
+        } else if (cond[1] === "Currency") {
+            cond[1] = "p.Currency";
+        } else if (cond[1] === "Mana") {
+            cond[1] = "p.Mana";
+        } else if (cond[1] === "Profession ID") {
+            cond[1] = "p.ProfessionID";
+        } else if (cond[1] === "Class ID") {
+            cond[1] = "p.ClassID";
+        } else if (cond[1] === "Location ID") {
+            cond[1] = "loc.LocationID";
+        } else if (cond[1] === "Username") {
+            cond[1] = "p.Username";
+        } else if (cond[1] === "Profession Name") {
+            cond[1] = "prof.Name";
+        } else if (cond[1] === "Class Name") {
+            cond[1] = "c.Name";
+        } else if (cond[1] === "Clan Name") {
+            cond[1] = "p.ClanName";
+        } else if (cond[1] === "Location Name") {
+            cond[1] = "ploc.Name";
+        } else if (cond[1] === "Base Stats") {
+            cond[1] = "pl.BaseStats";
+        } else if (cond[1] === "Last Seen Online") {
+            cond[1] = "p.LastSeenOnline";
+        }
+
+        if (cond[2] === "is equal to") {
+            cond[2] = "=";
+        } else if (cond[2] === "is not equal to") {
+            cond[2] = "!=";
+        } else if (cond[2] === "is greater than") {
+            cond[2] = ">";
+        } else if (cond[2] === "is greater than or equal to") {
+            cond[2] = ">=";
+        } else if (cond[2] === "is less than") {
+            cond[2] = "<";
+        } else if (cond[2] === "is less than or equal to") {
+            cond[2] = "<=";
+        } else if (cond[2] === "contains") {
+            cond[2] = "LIKE";
+        }
+
+        if (cond[2] === "LIKE") {
+            cond[3] = `%${cond[3]}%`;
+        }
+    }
+    return condList;
+}
 
 //aggregation with having query
 async function agregationWithHaving(minPlayerCount) { // made smth - minPlayerCount
@@ -381,6 +494,7 @@ module.exports = {
     agregationWithHaving,
     deleteItem,
     questProjection,
+    selectPlayers,
     insertEnemy,
     fetchEnemyData,
     updateEnemy,
