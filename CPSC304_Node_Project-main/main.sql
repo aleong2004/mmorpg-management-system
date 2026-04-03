@@ -241,7 +241,7 @@ INSERT INTO Clan (ClanName, MinLevelToJoin, ClanRank, NumMembers) VALUES ('MoonG
 INSERT INTO Clan (ClanName, MinLevelToJoin, ClanRank, NumMembers) VALUES ('ShadowLeaf', 8, 3, 14);
 INSERT INTO Clan (ClanName, MinLevelToJoin, ClanRank, NumMembers) VALUES ('IronLegion', 12, 4, 20);
 INSERT INTO Clan (ClanName, MinLevelToJoin, ClanRank, NumMembers) VALUES ('Wanderers', 1, 5, 30);
-INSERT INTO Clan (ClanName, MinLevelToJoin, ClanRank, NumMembers) VALUES ('Super Awesome Cool Guy Squad', 1, 6, 5);
+INSERT INTO Clan (ClanName, MinLevelToJoin, ClanRank, NumMembers) VALUES ('Super Awesome Cool Guy Squad', 1, 6, 6);
 
 INSERT INTO GlobalEvent (EventID, Name, TimeStart, TimeEnd, EXP_Reward, CurrencyReward) VALUES (1, 'Harvest Festival', TO_TIMESTAMP('2026-03-01 08:00:00', 'YYYY-MM-DD HH24:MI:SS'), TO_TIMESTAMP('2026-03-07 23:59:59', 'YYYY-MM-DD HH24:MI:SS'), 300, 150);
 INSERT INTO GlobalEvent (EventID, Name, TimeStart, TimeEnd, EXP_Reward, CurrencyReward) VALUES (2, 'Goblin Invasion', TO_TIMESTAMP('2026-03-10 10:00:00', 'YYYY-MM-DD HH24:MI:SS'),  TO_TIMESTAMP('2026-03-12 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 500, 250);
@@ -341,7 +341,7 @@ INSERT INTO Weapon (ItemID, WeaponStats, MinStats, BuffsToBaseStats) VALUES (2, 
 INSERT INTO Weapon (ItemID, WeaponStats, MinStats, BuffsToBaseStats) VALUES (3, 'HP: 0, ATK: 18, DEF: 0, SPD: 4', 'HP: 0, ATK: 8, DEF: 0, SPD: 8', 'HP: 0, ATK: 2, DEF: 0, SPD: 2');
 INSERT INTO Weapon (ItemID, WeaponStats, MinStats, BuffsToBaseStats) VALUES (4, 'HP: 0, ATK: 17, DEF: 0, SPD: 6', 'HP: 0, ATK: 7, DEF: 0, SPD: 9', 'HP: 0, ATK: 2, DEF: 0, SPD: 3');
 INSERT INTO Weapon (ItemID, WeaponStats, MinStats, BuffsToBaseStats) VALUES (5, 'HP: 20, ATK: 24, DEF: 2, SPD: -2', 'HP: 0, ATK: 14, DEF: 4, SPD: 0', 'HP: 10, ATK: 3, DEF: 1, SPD: -1');
-INSERT INTO Weapon (ItemID, WeaponStats, MinStats, BuffsToBaseStats) VALUES (6, 'HP: 0, ATK: 28, DEF: -5, SPD: -5', 'HP: 30, ATK: 20, DEF: 0, SPD: 0', 'HP: 15, ATK: 10, DEF: 0, SPD: 0');
+INSERT INTO Weapon (ItemID, WeaponStats, MinStats, BuffsToBaseStats) VALUES (10, 'HP: 0, ATK: 28, DEF: -5, SPD: -5', 'HP: 30, ATK: 20, DEF: 0, SPD: 0', 'HP: 15, ATK: 10, DEF: 0, SPD: 0');
 
 INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (1, 4, 0.20);
 INSERT INTO Drops (NPC_ID, ItemID, ItemDropRate) VALUES (20, 6, 0.18);
@@ -398,6 +398,7 @@ INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, Profe
 INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('aaaaaa', 11, 246, 180, TO_TIMESTAMP('2026-03-31 02:30:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 5, 'MoonGuard', 2);
 INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('kaicenat', 14, 923, 46, TO_TIMESTAMP('2026-03-17 21:01:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 2, 'ShadowLeaf', 5);
 INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('ishowspeed', 14, 895, 103, TO_TIMESTAMP('2026-03-17 21:00:00', 'YYYY-MM-DD HH24:MI:SS'), 5, 3, 'ShadowLeaf', 5);
+INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('awesomeguy5', 10, 1234, 123, TO_TIMESTAMP('2026-03-23 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 4, 4, 'Super Awesome Cool Guy Squad', 2);
 INSERT INTO Player (Username, PlayerLevel, Currency, Mana, LastSeenOnline, ProfessionID, ClassID, ClanName, LocationID) VALUES ('fortnite', 45, 24020, 1200, TO_TIMESTAMP('2026-04-02 22:00:00', 'YYYY-MM-DD HH24:MI:SS'), 2, 1, 'DragonSlayers', 4);
 
 INSERT INTO InInventory (Username, ItemID) VALUES ('todd', 2);
@@ -438,6 +439,7 @@ INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Michael Scott', 'awesomegu
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Michael Scott', 'awesomeguy2');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Michael Scott', 'awesomeguy3');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Michael Scott', 'awesomeguy4');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Michael Scott', 'awesomeguy5');
 
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy1', 'Michael Scott');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy1', 'awesomeguy3');
@@ -445,6 +447,8 @@ INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy1', 'awesomeguy4
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy1', 'awesomeguy2');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy2', 'awesomeguy3');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy3', 'awesomeguy4');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy1', 'awesomeguy5');
+INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('awesomeguy3', 'awesomeguy5');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('walterwhite', 'Tyler Ninja Blevins');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('fortnite', 'walterwhite');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('ishowspeed', 'kaicenat');
