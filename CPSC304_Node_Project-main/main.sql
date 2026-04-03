@@ -459,3 +459,6 @@ INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('johngamer', 'todd');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Tyler Ninja Blevins', 'kaicenat');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Tyler Ninja Blevins', 'ishowspeed');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('fortnite', 'aaaaaa');
+
+-- To enforce the participation constraint on GlobalEvent in the PartOf relationship, we would need to put 
+-- an assertion here that checks if NOT EXISTS ((GlobalEvent.EventID) EXCEPT (Quest.EventID)) is true.
