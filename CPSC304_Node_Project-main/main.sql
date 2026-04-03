@@ -256,6 +256,9 @@ INSERT INTO Quest (QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, EventID)
 INSERT INTO Quest (QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, EventID) VALUES (5, 'Deliver Supplies', 1, 50, 25, 1);
 INSERT INTO Quest (QuestID, Name, MinLevel, EXP_Reward, CurrencyReward, EventID) VALUES (6, 'Find Jerry', 1, 20, 30, NULL);
 
+-- To enforce the participation constraint on GlobalEvent in the PartOf relationship, we would need to put 
+-- an assertion here that checks if NOT EXISTS ((GlobalEvent.EventID) EXCEPT (Quest.EventID)) is true.
+
 INSERT INTO Location (LocationID, Name, Terrain, LocalTime, LocationLevel, Weather) VALUES (1, 'Greenhaven', 'Plains', 'Morning', 1, 'Sunny');
 INSERT INTO Location (LocationID, Name, Terrain, LocalTime, LocationLevel, Weather) VALUES (2, 'Ashen Peak', 'Mountain', 'Noon', 12, 'Windy');
 INSERT INTO Location (LocationID, Name, Terrain, LocalTime, LocationLevel, Weather) VALUES (3, 'Silverwood', 'Forest', 'Evening', 7, 'Rainy');
@@ -459,6 +462,3 @@ INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('johngamer', 'todd');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Tyler Ninja Blevins', 'kaicenat');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('Tyler Ninja Blevins', 'ishowspeed');
 INSERT INTO IsFriendsWith (Player1, Player2) VALUES ('fortnite', 'aaaaaa');
-
--- To enforce the participation constraint on GlobalEvent in the PartOf relationship, we would need to put 
--- an assertion here that checks if NOT EXISTS ((GlobalEvent.EventID) EXCEPT (Quest.EventID)) is true.
